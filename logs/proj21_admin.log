@@ -1,0 +1,6 @@
+[DEBUG] [2021-12-28 18:19] testDataSource()
+[DEBUG] [2021-12-28 18:19] DataSourceHikariDataSource (HikariPool-1)
+[DEBUG] [2021-12-28 18:19] LoginTimeout 30
+[DEBUG] [2021-12-28 18:29] testDataSource()
+[DEBUG] [2021-12-28 18:29] DataSourceHikariDataSource (HikariPool-1)
+[DEBUG] [2021-12-28 18:29] LoginTimeout 30

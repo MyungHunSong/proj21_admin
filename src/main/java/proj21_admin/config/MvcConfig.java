@@ -58,16 +58,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //	public HandlerInterceptor authCheckInterceptor() {
 //		return new AuthCheckInterceptor();
 //	}
-	
-	@Bean
-	public CommonsMultipartResolver multipartResolver() {
-		CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver();
-		multipartResolver.setMaxUploadSize(52428800);
-		multipartResolver.setMaxInMemorySize(52428800);
-		multipartResolver.setDefaultEncoding("utf-8");
-		return multipartResolver;
-	}
-	
+		
 	/* tile 경로*/
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
@@ -85,6 +76,15 @@ public class MvcConfig implements WebMvcConfigurer {
 		tilesViewResolver.setViewClass(TilesView.class);
 		tilesViewResolver.setOrder(1);
 		return tilesViewResolver;
+	}
+	
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(52428800);
+		multipartResolver.setMaxInMemorySize(52428800);
+		multipartResolver.setDefaultEncoding("utf-8");
+		return multipartResolver;
 	}
 	
 	// fileupload 어노테이션.
