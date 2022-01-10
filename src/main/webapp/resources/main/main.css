@@ -1,0 +1,142 @@
+@charset "UTF-8";
+/* header영역 */
+#header .top{
+	height: 130px;
+	margin: 0 auto;
+	padding:0 50px;
+	position: relative;
+}
+
+#header .top_name{
+	width: 92px;
+	height: 60px;
+	position: relative;
+	text-decoration: none;
+	font-size: 50px;
+	color: orange;
+}
+
+/* 메뉴바 영역 */
+#header .top-nav{
+	float:right;
+	list-style: none;
+	display: inline-flex;	
+	position: relative;
+	margin: auto;
+}
+
+.top-nav img {
+	vertical-align: top;
+	margin-right: 15px;
+	cursor: pointer;	
+}
+/* 메뉴바->말풍선 */
+.top-nav #menu_info{
+	background-color: #eef3fd;
+	border: #7689fd solid 1px;
+  	border-radius: 5px;
+  	color: #505bf0;  	
+  	font-weight: 500;
+  	height: auto;
+  	letter-spacing: -0.25px;
+  	margin-top: 6.8px;
+  	padding: 5px 11px;
+  	width: fit-content;
+  	z-index: 100;
+	display:none;
+	position: absolute;
+	font-size: 12px;
+	text-decoration: none;
+	
+}
+
+.top-nav li:hover > #menu_info{
+	display: block;
+	text-decoration: none;
+	list-style: none;
+}
+
+#oneNav{
+	margin: auto;
+	border: 1px solid #ccc;
+}
+
+#oneNav .bot-nav {
+	list-style: none;
+	display: inline-flex;
+	text-align: center;
+	
+}
+
+#oneNav .bot-nav li{
+	display: table-cell;
+	min-width: inherit;
+	position: relative;
+}
+
+#container{
+	border:1px solid #ccc;
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+}
+
+
+#footer{
+	clear:both;
+	width: 100%;
+	padding-bottom: 80px;
+	border-top: 1px solid #999;
+}
+
+#footer-in{
+	max-width: 1920px;
+	min-width: 1400px;
+	position: relative;
+	overflow: hidden;
+	padding: 0 4%;
+}
+
+.footer_inner_left{
+	float:left;
+	padding-top: 80px;
+}
+
+
+.footer_logo a{
+	width: 92px;
+	height: 60px;
+	position: relative;
+	text-decoration: none;
+	font-size: 50px;
+	color: orange;
+}
+
+.footer_left_bot > ul{
+	list-style: none;
+	margin: 20px 0;
+}
+
+.footer_left_bot > ul > li{
+	display:inline-block;
+}
+
+.footer_inner_right{
+ float:right;
+ width: 580px;
+ padding-top:80px;
+}
+
+.tel_time{
+	display: inline-block;
+	vertical-align: top;
+	padding-left:50px;
+	text-align: left;
+}
+
+.bank{
+	display: inline-block;
+	vertical-align: top;
+	padding-left:50px;
+	text-align: left;	
+}

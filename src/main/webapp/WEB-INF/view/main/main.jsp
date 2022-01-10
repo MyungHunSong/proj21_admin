@@ -5,102 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-#header .top{
-	height: 130px;
-	margin: 0 auto;
-	padding:0 50px;
-	position: relative;
-}
-
-#header .top a{
-	width: 92px;
-	height: 60px;
-	position: relative;
-	text-decoration: none;
-	font-size: 50px;
-	color: orange;
-}
-
-#header .top-nav{
-	float:right;
-	list-style: none;
-}
-
-#header .top-nav{
-	display: inline-flex;	
-	position: relative;
-	margin: auto;
-}
-
-.top-nav img {
-	vertical-align: top;
-	margin-right: 15px;
-	cursor: pointer;	
-}
-
-#oneNav{
-	margin: auto;
-	border: 1px solid #ccc;
-}
-
-#oneNav .bot-nav {
-	list-style: none;
-	display: inline-flex;
-	text-align: center;
-	
-}
-
-#oneNav .bot-nav li{
-	display: table-cell;
-	min-width: inherit;
-	position: relative;
-}
-
-#container{
-	border:1px solid #ccc;
-	position: relative;
-	width: 100%;
-	margin: 0 auto;
-}
-
-
-#footer{
-	clear:both;
-	width: 100%;
-	padding-bottom: 80px;
-	border-top: 1px solid #999;
-}
-
-#footer-in{
-	max-width: 1920px;
-	min-width: 1400px;
-	position: relative;
-	overflow: hidden;
-	padding: 0 4%;
-}
-
-.footer_inner_left{
-	float:left;
-	padding-top: 80px;
-}
-
-.footer_logo a{
-	width: 92px;
-	height: 60px;
-	position: relative;
-	text-decoration: none;
-	font-size: 50px;
-	color: orange;
-}
-
-.footer_inner_right{
- float:right;
- width: 580px;
- padding-top:80px;
- text-align: center;
-}
-</style>
+<link rel="stylesheet" href="${contextPath}/resources/main/main.css">
 <!-- 반응형 웹으로 변환 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, charset=utf-8">
 <title>궁금하다면 참여해봐 : Join Us</title>
@@ -115,23 +20,28 @@
 			<div class="top">
 				<!-- https://icons8.com/icon/JWv_lqo5fs4F/shopaholic 로고 사용 -->
 				
-				<a href="${contextPath}/main">
+				<a class="top_name" href="${contextPath}/main">
 					<img src="https://img.icons8.com/color/48/000000/shopaholic.png"/>
 				Join Us
 				</a>
 				
 				<ul class="top-nav">
-					<li data-tooltip="고객센터" data-tooltip-position="button">
-						<img src="https://img.icons8.com/material/24/000000/phone-disconnected--v1.png"/>
+					<li data-tooltip="고객센터" data-tooltip-position="bottom">
+						<a href="#"><img src="https://img.icons8.com/material/24/000000/phone-disconnected--v1.png"/></a>
+						<ul id="menu_info"><li>고객센터</li></ul>
+					</li>
+					
+					<li>
+						<a href="#"><img src="https://img.icons8.com/material/24/000000/user--v1.png"/></a>
+						<ul id="menu_info"><li>마이페이지</li></ul>
 					</li>
 					<li>
-						<img src="https://img.icons8.com/material/24/000000/user--v1.png"/>
+						<a><img src="https://img.icons8.com/material-rounded/24/000000/add-user-male.png"/></a>
+						<ul id="menu_info"><li>회원가입</li></ul>
 					</li>
 					<li>
-						<img src="https://img.icons8.com/material-rounded/24/000000/add-user-male.png"/>
-					</li>
-					<li>
-						<img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/>
+						<a><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
+						<ul id="menu_info"><li>로그인</li></ul>
 					</li>
 				</ul>				
 			</div>
@@ -179,11 +89,11 @@
 					</div>
 					
 					<div class="footer_left_bot">
-					<ul>
-						<li>회사 소개</li>
-						<li>이용 약관</li>
-						<li>개인정보처리방침</li>
-						<li>고객센터</li>
+					<ul class="menu">
+						<li><a href="#">회사 소개</a></li>
+						<li><a href="#">이용 약관</a></li>
+						<li><a href="#">개인정보처리방침</a></li>
+						<li><a href="#">고객센터</a></li>
 					</ul>
 					
 					<address class="info">
@@ -201,7 +111,7 @@
 					
 				<div class="footer_inner_right">
 					<div class="footer_right_top">
-						<div class="tel&time">
+						<div class="tel_time">
 							<dl>
 								<dd class="tell">053-999-9999</dd>
 								<dd>평일 &nbsp; 09:00 ~ 18:00</dd>
