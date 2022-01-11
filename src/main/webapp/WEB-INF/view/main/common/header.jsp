@@ -1,12 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="${contextPath}/resources/main/header.css">
 </head>
 <body>
-
+	<header id="header">
+			<div class="top">
+				<!-- https://icons8.com/icon/JWv_lqo5fs4F/shopaholic 로고 사용 -->
+				
+				<a class="top_name" href="${contextPath}/main">
+					<img src="https://img.icons8.com/color/48/000000/shopaholic.png"/>
+				Join Us
+				</a>
+				
+				
+			<ul class="bot-nav">
+				<li>반팔</li>
+				<li>긴팔</li>
+				<li>슬립스리스</li>
+				<li>후드</li>
+				<li>셔츠</li>
+				<li>스웨터</li>
+			</ul>
+			
+			
+				<ul class="top-nav">
+					<li data-tooltip="고객센터" data-tooltip-position="bottom">
+						<a href="#"><img src="https://img.icons8.com/material/24/000000/phone-disconnected--v1.png"/></a>
+						<ul id="menu_info"><li>고객센터</li></ul>
+					</li>
+					
+					<li>
+						<a href="#"><img src="https://img.icons8.com/material/24/000000/user--v1.png"/></a>
+						<ul id="menu_info"><li>마이페이지</li></ul>
+					</li>
+					<li>
+						<a><img src="https://img.icons8.com/material-rounded/24/000000/add-user-male.png"/></a>
+						<ul id="menu_info"><li>회원가입</li></ul>
+					</li>
+					<li>
+						<a><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
+						<ul id="menu_info"><li>로그인</li></ul>
+					</li>
+				</ul>
+			</div>								
+	</header>
 </body>
 </html>

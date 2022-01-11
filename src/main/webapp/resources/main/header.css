@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+/* header영역 */
+#header .top{
+	display: felx;
+	height:90px;
+	margin: 0 auto;
+	padding:0 50px;
+	position: relative;
+	background: #fff;
+}
+
+#header .top .top_name{
+	position: relative;
+	text-decoration: none;
+	font-size: 30px;
+	color: orange;
+	padding-right: 30px;
+}
+
+
+.bot-nav{
+	margin: 0 auto;
+	border: 1px solid #ccc;
+	width: 65%;
+}
+
+.bot-nav {
+	list-style: none;
+	display: inline-flex;
+	text-align: center;
+	
+}
+
+.bot-nav li{
+	display: table-cell;
+	min-width: inherit;
+	position: relative;
+}
+
+/*  로그인 영역 */
+#header .top-nav{
+	float:right;
+	list-style: none;
+	display: inline-flex;	
+	position: relative;
+	margin: auto;
+	
+}
+
+.top-nav img {
+	margin-right: 15px;
+	cursor: pointer;	
+}
+/* 메뉴바->말풍선 */
+.top-nav #menu_info{
+	background-color: #eef3fd;
+	border: #7689fd solid 1px;
+  	border-radius: 5px;
+  	color: #505bf0;  	
+  	font-weight: 500;
+  	height: auto;
+  	letter-spacing: -0.25px;
+  	margin-top: 6.8px;
+  	padding: 5px 11px;
+  	width: fit-content;
+  	z-index: 100;
+	display:none;
+	position: absolute;
+	font-size: 12px;
+	text-decoration: none;
+	
+}
+
+.top-nav li:hover > #menu_info{
+	display: block;
+	text-decoration: none;
+	list-style: none;
+}

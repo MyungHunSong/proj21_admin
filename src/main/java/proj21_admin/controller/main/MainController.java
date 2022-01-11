@@ -12,7 +12,6 @@ public class MainController {
 	public String form() {
 		
 		
-		return "/main/main";
-		
+		return "/main/main";	
 	}
 }
