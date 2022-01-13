@@ -17,18 +17,15 @@
 				<a class="top_name" href="${contextPath}/main">
 					<img src="https://img.icons8.com/color/48/000000/shopaholic.png"/>
 				Join Us
-				</a>
-				
-				
+				</a>	
 			<ul class="bot-nav">
-				<li>반팔</li>
-				<li>긴팔</li>
-				<li>슬립스리스</li>
-				<li>후드</li>
-				<li>셔츠</li>
-				<li>스웨터</li>
+				<li><a href="#">반팔</a></li> 
+				<li><a href="#">긴팔</a></li>
+				<li><a href="#">슬립스리스</a></li>
+				<li><a href="#">후드</a></li>
+				<li><a href="#">셔츠</a></li>
+				<li><a href="#">스웨터</a></li>
 			</ul>
-			
 			
 				<ul class="top-nav">
 					<li data-tooltip="고객센터" data-tooltip-position="bottom">
@@ -45,11 +42,12 @@
 						<ul id="menu_info"><li>회원가입</li></ul>
 					</li>
 					<li>
-						<a><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
+						<a href="login"><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
 						<ul id="menu_info"><li>로그인</li></ul>
 					</li>
 				</ul>
-			</div>								
+			</div>	
+										
 	</header>
 </body>
 </html>

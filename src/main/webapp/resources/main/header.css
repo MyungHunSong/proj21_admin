@@ -1,9 +1,15 @@
 @charset "UTF-8";
 
+#header{
+	margin: auto;
+	min-width: 1440px;
+	max-width: 1900px;
+}
+
 /* header영역 */
 #header .top{
 	display: felx;
-	height:90px;
+	height:130px;
 	margin: 0 auto;
 	padding:0 50px;
 	position: relative;
@@ -16,16 +22,12 @@
 	font-size: 30px;
 	color: orange;
 	padding-right: 30px;
+	font-weight: bold;
 }
 
-
+/* 상품 영역 */
 .bot-nav{
 	margin: 0 auto;
-	border: 1px solid #ccc;
-	width: 65%;
-}
-
-.bot-nav {
 	list-style: none;
 	display: inline-flex;
 	text-align: center;
@@ -33,9 +35,22 @@
 }
 
 .bot-nav li{
-	display: table-cell;
+	display:table-cell;
 	min-width: inherit;
 	position: relative;
+	margin-right: 40px;
+	margin-left: 70px;
+}
+
+.bot-nav > li > a {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 15px;
+	color: black;		
+}
+
+.bot-nav  li:hover >a{
+	color:red;
 }
 
 /*  로그인 영역 */

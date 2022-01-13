@@ -8,6 +8,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${contextPath}/resources/main/footer.css">
+<style type="text/css">
+#scrollMenu{
+	margin: 0;
+	width: 70px;
+	height: 80px;
+	position: fixed;
+	bottom: 100px;
+	right:30px;
+}
+#scrollMenu > ul{
+	list-style: none;
+}
+
+
+</style>
+<script type="text/javascript">
+	$(function () {
+			$("go_top").click(function(){
+				$('html, body').animate({scrollTop:0}, 100);
+				
+				var scrollHeight = $(document).height();
+				$("#go_down").click(function(){
+					$('html, body').animate({scrollTop:scrollHeight}, 100);
+				});
+			});
+	});
+</script>
 </head>
 <body>
 	<!-- -------------------------------------- -->
@@ -71,6 +98,16 @@
 				</div>
 			</div>
 			
+			<div id="scrollMenu">
+				<ul>
+					<li>
+						<img id="go_top" src="https://img.icons8.com/ios/50/000000/circled-up-2.png"/>
+					</li>
+					<li>
+						<img id="go_down" src="https://img.icons8.com/ios/50/000000/circled-down-2.png"/>
+					</li>
+				</ul>
+			</div>
 			
 		</footer>
 		<!-- -------------------------------------- -->
