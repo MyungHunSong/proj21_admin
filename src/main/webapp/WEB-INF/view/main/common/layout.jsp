@@ -11,6 +11,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>Insert title here</title>
+
+<style type="text/css">
+#content{
+	margin-top:20px;
+	margin-bottom: 20px;
+}
+</style>
 </head>
 <body>
 	<div id="all">

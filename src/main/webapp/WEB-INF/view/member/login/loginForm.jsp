@@ -8,24 +8,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="${contextPath}//resources/member/loginForm.css">
+<script>
+      	let button = () => {
+        	alert('login Button !')
+        }
+</script>
 </head>
 <body>
-	<h1>회원 로그인</h1>
 	<section id="LoginFormArea">
-		<form:form modelAttribute="LoginCommand">
-			<table>
-				<tr>
-					<td><label for="id">아이디</label></td>
-					<td><input type="text" name="id" id="id"></td>
-				</tr>
-				<tr>
-					<td><label for="password">비밀번호</label></td>
-					<td><input type="password" name="password" id="password"></td>
-				</tr>
-			</table>			
-			<input type="submit" value="로그인" class="button"/>			
-		</form:form>
+		<form:form modelAttribute="LoginCommand" action="index.html" class="loginForm">
+      		<h2>Login</h2>
+      		<div class="idForm">
+        	<input type="text" class="id" placeholder="ID">
+      		</div>
+      		<div class="passForm">
+        	<input type="password" class="pw" placeholder="PW">
+      		</div>
+      		<button type="button" class="btn" onclick="button()">
+        	LOG IN
+    	  	</button>
+      		<div class="bottomText">
+      		
+        	Don't you have ID? <a href="#">sign up</a>
+      </div>			
+	</form:form>
 	</section>
 </body>
 </html>

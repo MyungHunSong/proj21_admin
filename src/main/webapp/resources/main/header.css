@@ -1,9 +1,11 @@
 @charset "UTF-8";
 
+
 #header{
 	margin: auto;
 	min-width: 1440px;
 	max-width: 1900px;
+	border-bottom: #ccc solid 1px;
 }
 
 /* header영역 */
