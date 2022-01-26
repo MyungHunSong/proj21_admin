@@ -7,15 +7,16 @@ import proj21_admin.dto.member.AuthInfo;
 import proj21_admin.dto.member.MemberDTO;
 import proj21_admin.exception.WrongIdPasswordException;
 import proj21_admin.mapper.member.MemberMapper;
+import proj21_admin.service.AuthService;
 
 @Service
-public class AuthServiceImpl{
+public class AuthServiceImpl implements AuthService{
 	
 	@Autowired
 	private MemberMapper mapper;
 
-	
-	public AuthInfo autheniCate(String id, String password) {
+	@Override
+	public AuthInfo autuicate(String id, String password) {
 		MemberDTO member = new MemberDTO();
 		System.out.println("이까지도 옴: " + password);
 		member.setMemberId(id);

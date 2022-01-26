@@ -9,11 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}//resources/member/loginForm.css">
-<script>
-      	/*let button = () => {
-        	alert('login Button !')
-        }*/
-</script>
 </head>
 <body>
 	<section id="LoginFormArea" >

@@ -45,7 +45,7 @@ public class LoginController {
 		}
 		
 		try {
-			AuthInfo authInfo = authServiceImpl.autheniCate(loginCommand.getId(), loginCommand.getPassword());
+			AuthInfo authInfo = authServiceImpl.autuicate(loginCommand.getId(), loginCommand.getPassword());
 			session.setAttribute("authInfo", authInfo); // 세션에 로그인 정보 저장
 			
 			System.out.println("id: " + loginCommand.getId());
