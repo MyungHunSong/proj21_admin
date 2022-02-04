@@ -15,13 +15,14 @@
 		<form:form modelAttribute="loginCommand" class="loginForm">
       		<h2>Login</h2>
       		<div class="idForm">
-        	<input type="text" name="id" class="id" placeholder="ID">
+        		<input type="text" name="id" class="id" placeholder="ID">
       		</div>
+      		
       		<div class="passForm">
       		<!-- form 태그를 사용했다면 반드시 name 이름을 찍어줘야 한다. 만약 안찍어 준다면? 받아오지를 못한다 -->
-        	<input type="password" name="password" class="pw" placeholder="PW" value="${authInfo.password}">
+        		<input type="password" name="password" class="pw" placeholder="PW" value="${authInfo.password}">
       		</div>
-      		<input type="submit" value="LOG IN" class="btn">
+      			<input type="submit" value="LOG IN" class="btn">
       		<div class="bottomText">      		
         	Don't you have ID? <a href="#">sign up</a>
       </div>

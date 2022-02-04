@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${contextPath}/resources/main/header.css">
-<script></script>
+
 </head>
 <body>
 	<header id="header">
@@ -38,10 +38,14 @@
 						<a href="#"><img src="https://img.icons8.com/material/24/000000/user--v1.png"/></a>
 						<ul id="menu_info"><li>마이페이지</li></ul>
 					</li>
+				
+				<c:if test="${empty authInfo}">
 					<li>
 						<a><img src="https://img.icons8.com/material-rounded/24/000000/add-user-male.png"/></a>
 						<ul id="menu_info"><li>회원가입</li></ul>
 					</li>
+				</c:if>	
+					
 				<c:if test="${empty authInfo}">
 					<li>
 						<a href="login"><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
@@ -50,12 +54,13 @@
 				</c:if>
 				
 				<c:if test="${!empty authInfo}">
-					<a href="logout"><img src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png"/></a>
-						<ul id="menu_info"><li>로그아웃</li></ul>	
+					<li>
+						<a href="logout"><img src="https://img.icons8.com/ios-filled/50/000000/logout-rounded-left.png" style="width:24px; height: 24px; "/></a>
+						<ul id="menu_info"><li>로그아웃</li></ul>
+					</li>	
 				</c:if>	
-				</ul>
-			</div>	
-										
+			</ul>
+		</div>										
 	</header>
 </body>
 </html>

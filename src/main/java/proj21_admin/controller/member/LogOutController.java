@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogOutController {
 	
 	@GetMapping
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session){
+		
 		session.invalidate();
-		return "redirect:/main";
+		System.out.println("이까지 탄다");
+		return "redirect:/main";		
 	}
 }

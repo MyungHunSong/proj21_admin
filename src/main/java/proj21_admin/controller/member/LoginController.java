@@ -42,19 +42,20 @@ public class LoginController {
 		System.out.println("password: " + loginCommand.getPassword());
 		if(errors.hasErrors()) {
 			return "/member/login/loginForm";
-		}
-		
+		}		
 		try {
 			AuthInfo authInfo = authServiceImpl.autuicate(loginCommand.getId(), loginCommand.getPassword());
 			session.setAttribute("authInfo", authInfo); // 세션에 로그인 정보 저장
-			
 			System.out.println("id: " + loginCommand.getId());
 			
+			if(loginCommand.getId().equals("admin")) {
+				System.out.println("loginCommand == "+ loginCommand.getId());
+				return "redirect:/admin/order/orderStatics";
+			}			
 			return "redirect:/main";
 		}catch (WrongIdPasswordException ex) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			
 			out.print("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
 			out.flush();
 			return "/member/login/loginForm";
