@@ -7,10 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content ="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="${contextPath}/resources/admin/dist/css/style.min.css">
+	<link href="${contextPath}/resources/admin/dist/css/style.min.css" rel="stylesheet">
 </head>
 <body>
- <!-- Preloader - style you can find in spinners.css -->
+	<!-- ============================================================== -->
+ 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
 	<div class="preloader" >
 		<div class="lds-ripple">
@@ -19,7 +20,8 @@
 		</div>
 	</div>
 	
- <!-- Main wrapper - style you can find in pages.scss -->
+	<!-- ============================================================== -->
+ 	<!-- Main wrapper - style you can find in pages.scss -->
 	<!-- ============================================================== -->
 	<div id="main-wrapper" style="background-color: #1f262d;">
 		<!-- ============================================================== -->
@@ -33,12 +35,12 @@
 			<i class="ti-menu ti-close"></i>
 			</a>
 			<!-- Logo -->
-			<a class="navbar-brand" href="${contextPath}/admin/order/orderStatics">
+			<a class="navbar-brand" href="${contextPath}/main">
 			<!-- Logo icon -->
 			<b class="logo-icon p-l-10">
 			<!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
 				<!-- Dark Logo icon -->
-				<img src="${contextPath}/resources/banner/headerR.jpg" alt="homepage"
+				<img src="https://img.icons8.com/color/48/000000/shopaholic.png" alt="homepage"
 				style="display: inline-block; width: 100%; height: 60px; object-fit: revert; border-radius: 5px;"
 				class="light-logo" >
 			</b>
@@ -70,16 +72,16 @@
 				<ul id="sidebarnav" class="p-t-30">
 					<li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"  aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">회원 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level">
-							<li class="sidebar-item"><a href="${contextPath}/admin/member/listMembers" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 목록 </span></a></li>
-							<li class="sidebar-item"><a href="${contextPath}/admin/member/viewMember?memberId=admin" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 활동 정보 </span></a></li>
-							<li class="sidebar-item"><a href="${contextPath }/admin/review/listReviews" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 리뷰 관리 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 목록 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 활동 정보 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 리뷰 관리 </span></a></li>
 						</ul>
 					</li>
 					<li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">상품 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level">
-							<li class="sidebar-item"><a href="${contextPath }/admin/product/listProducts" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 관리 </span></a></li>
-							<li class="sidebar-item"><a href="${contextPath }/admin/product/addNewProductForm" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 등록 </span></a></li>
-							<li class="sidebar-item"><a href="${contextPath }/admin/order/listOrders" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 주문/배송 관리 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 관리 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 등록 </span></a></li>
+							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 주문/배송 관리 </span></a></li>
 						</ul>
 					</li>
 				</ul>

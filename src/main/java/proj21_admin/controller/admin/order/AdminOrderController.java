@@ -1,4 +1,4 @@
-package proj21_admi.controller.admin.order;
+package proj21_admin.controller.admin.order;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,6 @@ public class AdminOrderController {
 	@GetMapping
 	public String searchMember() {
 		
-		return "/order/orderStatics";
+		return "admin/order/orderStatics";
 	}
 }
