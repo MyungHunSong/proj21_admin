@@ -14,4 +14,10 @@ public class MainController {
 		
 		return "/main/main";	
 	}
+	
+	@RequestMapping("pratice")
+	public String form2() {
+		
+		return "/pratice";
+	}
 }
