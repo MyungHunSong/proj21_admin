@@ -50,7 +50,7 @@ public class LoginController {
 			
 			if(loginCommand.getId().equals("admin")) {
 				System.out.println("loginCommand == "+ loginCommand.getId());
-				return "redirect:/admin";
+				return "redirect:/admin/order/orderStatics";
 			}			
 			return "redirect:/main";
 		}catch (WrongIdPasswordException ex) {

@@ -9,6 +9,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
+<style>
+#container{
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	border: 0px solid #bcbcbc; 	
+}
+
+#header{
+	padding: 5px;
+	margin-bottom: 5px;
+	border: 0px solid #bcbcbc;
+	background-color: #FFFFFF;	
+}
+
+#sidebar-left{
+	width: 15%;
+	height: 700px;
+	padding: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	float: left;
+	background-color:  yellow;
+	font-size: 10px;
+}
+
+#content{
+	width: 100%;
+	padding: 5px;
+	margin-right: 5px;
+	float: left;
+	border: 0px solid #bcbcbc;
+}
+
+#footer{
+	clear: both;
+	padding: 5px;
+	border: 0px solid #bcbcbc;
+	background-color: lightblue;
+	
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>

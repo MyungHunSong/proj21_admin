@@ -9,7 +9,7 @@
     <link href="${contextPath}/resources/admin/dist/css/1style.min.css" rel="stylesheet">
 </head>
 <body>
-${contextPath}
+
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->
@@ -38,7 +38,7 @@ ${contextPath}
 			<!-- Logo icon -->
 			<b class="logo-icon p-l-10">
 			<!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-				<!-- Dark Logo icon -->
+			<!-- Dark Logo icon -->
 				<img src="https://img.icons8.com/color/48/000000/shopaholic.png" alt="homepage"
 				style="display: inline-block; width: 100%; height: 60px; object-fit: revert; border-radius: 5px;"
 				class="light-logo" >
@@ -49,7 +49,6 @@ ${contextPath}
 				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			</a>
 		</div>
-
 		<div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5" >
 			<ul class="navbar-nav float-left mr-auto">
 				<li class="nav-item d-none d-md-block">
