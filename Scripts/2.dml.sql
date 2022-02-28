@@ -37,6 +37,7 @@ VALUES
 
 select * from proj21_admin.product;
 
+
 INSERT ignore INTO proj21_shop.product
 	(pro_num, pro_category, pro_name, pro_price, pro_content, pro_salesrate, pro_color, pro_size, pro_quantity)
 values
@@ -200,8 +201,10 @@ values
 
 -- 제품 이미지
 -- pro_img_state가 1이면 메인 이미지 0이면 보조 이미지
-INSERT IGNORE INTO proj21_admin.pro_img
-		(pro_num , pro_imagefilename, pro_img_state)
+
+
+INSERT ignore INTO proj21_admin.pro_img
+		(pro_num , pro_imgfilename , pro_img_state)
 values
 		(1111, '1113.jpg',1),
 		(1112, '1113.jpg',1),

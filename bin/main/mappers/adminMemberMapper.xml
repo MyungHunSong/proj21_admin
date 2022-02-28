@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proj21_admin.mapper.admin.member.AdminMemberMapper">
+	<resultMap id="adminResult" type="MemberDTO" >
+		<result property="memberId" column="m_id"/>
+		<result property="memberPwd" column="m_passwd"/>
+		<result property="memberPwdConfirm" column="member_pwd_lock"/>
+		
+		<result property="memberPwdQ" column="m_question"/>
+		<result property="memberPwdA" column="m_answer"/>
+		<result property="memberName" column="m_name"/>
+		
+		<result property="memberGender" column="m_gender"/>
+		<result property="memberPh" column="m_phone"/>
+		
+		<result property="memberEmail" column="m_email"/>
+		
+		<result property="memberAddr1" column="m_addr1"/>
+		<result property="memberAddr2" column="m_addr2"/>
+		<result property="memberAddr3" column="m_addr3"/>
+		
+		<result property="memberBirth" column="m_birthday"/>
+		
+		<result property="memberCreDate" column="m_join"/>
+		<result property="memberPoint" column="m_point"/>
+		<result property="memberTotalBuy" column="m_total_buy"/>
+		<result property="memberTotalOrder" column="m_total_order"/>
+		<result property="memberTotalLogin" column="m_total_login"/>		
+	</resultMap>
+	
+	<update id="updateMember">
+		UPDATE
+			`member`
+		<set>
+			m_total_buy = m_total_buy -#{change_orderValue},
+			m_total_order = m_total_order - 1,
+			m_point = m_point - (#{change_orderValue} * 0.01)
+		</set>		
+		WHERE
+		 	m_id = #{change_orderMemberId};
+	</update>
+	
+	<!-- 회원 검색 조건문 -->
+	<select id="selectAllMemberList" resultMap="adminMemResult">
+		SELECT m_id, m_name, m_gender, m_point, m_join, m_total_order, m_total_buy	
+			FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND/OR">
+		<!-- 아래 tutorId != null 조건이 참이면 앞부분에서 where 자동 추가 -->
+			<if test="keyword != null and !keyword.equals('')">
+				m_name LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<!-- 만약 where가 추가 된 경우 and 절 추가, where 존재하지 않는 경우 where 추가하고 and 제거 -->
+			<if test="memberGender != null and !memberGender.equals('')">
+				and m_gender = #{memberGender}
+			</if>
+		</trim>
+		<if test="memberTotalOrder != null and !memberTotalOrder.equals('')">
+			<choose>
+				<!-- total_order_desc 와 같으면 내림차순 정렬 -->
+				<when test="memberTotalOrder.equals('total_order_desc)">
+					m_total_order DESC,	
+				</when>
+			
+				<!-- 반대면 오름차순 -->
+				<when test="memberTotalOrder.equals('total_order_asc')">
+				m_total_order ASC,
+				</when>
+			</choose>
+		</if>
+			m_join DESC
+	</select>
+	
+	<!-- 여성 회원수 -->
+	<select id="selectAllMemberWomen" resultType="int" parameterType="String">
+		select count(*)
+			from `member`
+		where m_gender = 1;
+	</select>
+	
+	<!-- 검색한 회원 수 -->
+	<select id="selectMembers" resultType="int" parameterType="map">
+	select count(*)
+	from `member`
+	<choose>
+		<when test="keyword != null and !keword.equals('')">
+			where m_name like concat('%', ${keyword}, '%')
+			<if test="memberGender != null and !memberGender.equals('')" >
+				and m_gender = #{memberGender}
+			</if>
+		</when>
+		<otherwise>
+			<if test="memberGender != null and !memberGender.equals('')">
+				where m_gender = #{memberGender}
+			</if>
+		</otherwise>
+	</choose>
+	</select>
+	
+	<!-- 회원 상세 정보 검색  (사실 sql 가독성 십구데기)-->
+	<select id="selectMemberByCertain" resultMap="adminMemResult" parameterType="java.util.Map">
+		SELECT m_id, m_name, m_point, m_total_login, m_total_buy, m_total_order
+		  FROM (SELECT (@rownum := @rownum + 1) AS rn, m_id, m_name, m_point,
+		  		m_total_login,
+		  		(SELECT count(order_pro_num) FROM (SELECT * FROM MEMBER m JOIN `order` o ON m.m_id =o.order_member_id WHERE m_id = #{memberId} GROUP BY order_pro_num)AS a) as m_total_order,
+		  		m_total_buy
+		  		  FROM `MEMBER`
+		<choose>
+			<when test="memberId !=null and !memberId.equals('')">
+			  WHERE m_id=#{memberId} AND (@rownum:=0)=0) AS A
+		 WHERE rn=1
+			</when>		
+			<otherwise>
+			  WHERE m_name LIKE CONCAT('%', #{memberKeyword}, '%') OR m_id LIKE CONCAT('%', #{memberKeyword}, '%') AND (@rownum:=0)=0) AS A
+ 		 WHERE rn=1
+			</otherwise>
+			<!--Nonmember는 아예따른쪽으로  -->
+		</choose>		
+	</select>
+</mapper>

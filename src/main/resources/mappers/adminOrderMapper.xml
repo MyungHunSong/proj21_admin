@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proj21_admin.mapper.admin.order.AdminOrderMapper">
+	<resultMap id="orderResult" type="OrderDTO" >
+		<result property="orderProNum" column="order_pro_num" />
+			<result property="orderCode" column="order_code" />
+			<result property="orderMemberId" column="order_member_id" />
+			<result property="orderMemberName" column="order_member_name" />
+			<result property="orderProQuantity" column="order_pro_quantity" />
+			<result property="orderValue" column="order_value" />
+			<result property="orderPrice" column="order_price" />
+			<result property="orderDiscount" column="order_discount" />
+			
+			<result property="receiverName" column="receiver_name" />
+			<result property="receiverTel1" column="receiver_tel1" />
+			<result property="receiverTel2" column="receiver_tel2" />
+			
+			<result property="deliveryAddr1" column="delivery_addr1" />
+			<result property="deliveryAddr2" column="delivery_addr2" />
+			<result property="deliveryAddr3" column="delivery_addr3" />
+			<result property="deliveryStatus" column="delivery_status" />
+			
+			<result property="requestToDelivery" column="request_to_delivery" />
+			
+			<result property="whoPay" column="who_pay" />
+			<result property="whichBank" column="which_bank" />
+			<result property="orderDate" column="order_date" />
+			
+			<association property="pro" javaType="ProductDTO">
+				<result property="proNum" column="pro_num"/>
+				<result property="proName" column="pro_name"/>
+				<result property="proImgFileName" column="pro_imagefilename"/>
+				<result property="proColor" column="pro_color"/>
+				<result property="proSize" column="pro_size"/>
+			</association>
+			
+			<association property="productImageDTO" javaType="ProductImageDTO">
+				<result property="proNum" column="pro_num"/>
+				<result property="proImgCode" column="pro_img_code"/>
+				<result property="proImageFileName" column="pro_imagefilename"/>
+				<result property="proImageFileType" column="pro_img_state"/>
+			</association>
+	</resultMap>
+	
+	<!-- 주문이 있는지 없는지 확인 -->
+	<select id="atLeastOneOrder" resultType="String">
+		select if(count(*=0), 'false', 'true)
+		from `order`
+	</select>
+	
+	<!-- 총 판매 금액 -->
+	<select id="getTotalRevenue" resultType="int">
+		select sum(order_pro_quantity * order_price)
+		from `order`
+	</select>
+	
+	<!-- 총 주문 건 수 -->
+	<select id="getTotalOrderCount" resultType="int">
+		select count(distinct order_pro_num)
+		from `order`
+	</select>
+	
+	<!-- 총 주문 수 -->
+	<select id="selectTotalOrders" resultType="int">
+		select count(*)
+		from `order`
+	</select>
+	
+	<!-- 배송 준비 중 수 -->
+	<select id="selectAllWaitingDelivery" resultType="int" parameterType="String">
+		select count(*)
+		from `order`
+		where delivery_status='배송준비중'
+	</select>
+	
+	<!-- 배송 중 수 -->
+	<select id="selectAllOnDelivery" resultType="int" parameterType="String">
+		select count(*)
+		from `order`
+		where delivery_status='배송중'
+	</select>
+	
+	<!-- 배송 완료 수 -->
+	<select id="selectAllTotDoneDelivery" resultType="int" parameterType="String">
+		select count(*)
+		from `order`
+		where delivery_status='배송완료'
+	</select>
+	
+	<!-- 환불 완료 수 -->
+	<select id="selectAllDoneRefund" resultType="int" parameterType="String">
+		select count(*)
+		from `order`
+		where delivery_status='반품완료'
+	</select>
+	
+	<!-- 환불 대기 수 -->
+	<select id="selectAllWaitingRefund" resultType="int" parameterType="String">
+		select count(*)
+		from `order`
+		where delivery_status='반품대기중'
+	</select>
+	
+	<select id="selectOrderList" resultMap="orderResult" parameterType="java.util.Map">
+		SELECT DISTINCT 
+		a.*,
+		c.pro_imgfilename ,
+		p.pro_name
+			FROM
+		(
+			SELECT 
+				FORMAT(@ROWNUM := @ROWNUM + 1, 0) AS rn,
+				order_code,
+				order_pro_num,
+				order_date,
+				order_pro_quantity,
+				delivery_status,
+				order_m_name,
+				request_to_delivery,
+				which_bank,
+				order_price,
+				p.pro_price-(p.pro_salerate*0.01*p.pro_price) AS order_value,
+				p.pro_num,
+				p.pro_color,
+				p.pro_size
+			FROM
+				(SELECT@ROWNUM := 0 ) R, `ORDER` o JOIN product p ON o.o_pro_num = p.pro_num
+			WHERE
+				order_date > 0 
+			<choose>
+				<when test="orderProNum != null and !orderProNum.equals('')">
+					and o.order_pro_num = #{orderProNum}
+				</when>
+			</choose>
+			<if test="deliveryStatus != null and total == null and !deliveryStatus.equals('all') and !deliveryStatus.equals('')">
+				and o.delivery_status = #{deliveryStatus}
+			</if>
+			
+			<if test="orderMemberName != null and !orderMemberName.equals('')">
+				and o.order_m_name like concat('%', #{orderMemberName}, '%')
+			</if>		
+				)a,	product p JOIN pro_img c ON p.pro_num = c.pro_num
+			WHERE
+				c.pro_img_state = 1
+				AND p.pro_num = a.pro_num
+				AND rn 
+				BETWEEN (#{section, jdbcType=NUMERIC}-1)* 100 +(#{pageNum, jdbcType=NUMERIC}-1)* 10 + 1 
+				AND (#{section, jdbcType=NUMERIC}-1)* 100 +#{pageNum, jdbcType=NUMERIC}* 10;
+				<if test="orderPrice !=null and !orderPrice.equals('')">
+			<choose>
+				<when test="orderPrice.equals('price_desc')">
+					ORDER BY a.order_price DESC
+				</when>
+				<when test="orderPrice.equals('price_asc')">
+					ORDER BY a.order_price ASC
+				</when>
+			</choose>
+		</if>
+	</select>
+	
+	<!-- UPDATE 배송상태 -->
+	<update id="updateDelivery">
+		update `order`
+		<set>
+			delivery_status = #{change_deliveryStatus}
+		</set>
+		<where>
+			order_pro_num = #{change_orderProNum}
+			<if test="change_deliverystatus.equals('반품완료')">
+			and order_code = #{change_orderCode}
+			</if>
+		</where>
+	</update>
+	
+	<!-- 배송 상태 갯수 -->
+	<select id="selectedTotal" parameterType = "map" resultType="int">
+		select count(distinct order_pro_num)
+		  from `order`
+		<where>
+			<choose>
+				<when test="orderProNum != null and orderProNum.equals('')">
+					and order_pro_num = #{orderProNum}
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+			<if test="deliveryStatus !=null and !deliveryStatus.equals('')">
+				and delivery_status=#{deliveryStatus}
+			</if>
+			<if test="orderMemberName !=null and orderMemberName.equals('')">
+				and order_m_name like CONCAT('%',#{orderMemberName},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id= "deleteOrder" parameterType = "map">
+		delete 
+			from order
+		where order_pro_num = #{orderProNum}
+	</delete>
+	
+	<!-- 업데이트 무엇? waitingRefund -->
+	<update id="setUpRefund" parameterType = "map">
+		update `order`
+		<set>
+			delivery_status = #{waitingRefund}			
+		</set>
+				
+		<where>
+			order_pro_num = #{orderProNum} and order_code =#{orderCode}
+		</where>
+	</update>
+	
+	<!-- orderList 평균값 -->
+	<select id="selectAverageOrder" resultType="int" parameterType="String">
+		select sum(order_price)/count(order_code)
+			from `order`
+			where order_m_id = #{orderMemberId};			
+	</select>
+	
+	<select id="haveOrdered" parameterType="String" resultType="String">
+		select if(count(order_m_id)=0,'false','true')
+		  from `order`
+		 where order_m_id = #{orderMemberId}
+	</select>
+	
+	<select id="onDelivery" parameterType="map" resultType="String">
+		select count(delivery_status)
+		  from `order`
+		 where order_m_id= #{orderMemberId} and delivery_status = #{deliveryStatus}
+	</select>
+	
+	<select id="haveRefunded" parameterType="map" resultType="String">
+		select if(count(order_pro_num)=0,'false','true')
+		  from `order` 
+		 where order_m_id = #{orderMemberId} and delivery_status=#{deliveryStatus}
+	</select>
+	
+	<select id="onRefund" parameterType="map" resultType="String">
+		select count(order_pro_num)
+		  from `order` 
+		 where order_m_id =#{orderMemberId} and delivery_status=#{deliveryStatus}
+	</select>
+	
+	<select id="get_OrderList" resultMap="orderResult" parameterType="map">
+		SELECT DISTINCT a.*
+		  FROM (SELECT order_pro_num, order_code , order_date , order_pro_quantity , order_price ,
+		  			   delivery_status ,order_m_name, request_to_delivery, which_bank,
+					   p.pro_num, p.pro_color, p.pro_size, p.pro_name, img.pro_imgfilename
+				  FROM `order` o , product p , pro_img img
+				 WHERE o.o_pro_num = p.pro_num AND img.pro_img_state = 1 AND img.pro_num = p.pro_num AND o.order_member_id = #{orderMemberId}
+					   <choose>
+					   <when test="orderProNum != null">
+					   AND
+					   o.order_pro_num = #{orderProNum}
+					   </when>
+					   <otherwise></otherwise>
+					   </choose>
+					   <if test="deliveryStatus !=null">
+					   AND
+					   o.delivery_status= #{deliveryStatus}
+					   </if>
+				) a, product p
+		  WHERE p.pro_num = a.pro_num
+		  ORDER BY a.order_code DESC;
+	</select>
+	
+	
+</mapper>
