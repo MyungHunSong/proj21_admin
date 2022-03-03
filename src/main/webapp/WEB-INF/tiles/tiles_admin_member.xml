@@ -3,10 +3,10 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="admin/order/*" template="/WEB-INF/view/admin/common/layout.jsp">
+	<definition name="admin/member/*" template="/WEB-INF/view/admin/common/layout.jsp">
 		<put-attribute name="admin_title" value="레이아웃"/>
 		<put-attribute name="admin_header" value="/WEB-INF/view/admin/common/header.jsp"/>
-		<put-attribute name="admin_body" value="/WEB-INF/view/admin/order/{1}.jsp"/>
+		<put-attribute name="admin_body" value="/WEB-INF/view/admin/member/{1}.jsp"/>
 		<put-attribute name="admin_footer" value="/WEB-INF/view/admin/common/footer.jsp"/>
 	</definition>
 </tiles-definitions>

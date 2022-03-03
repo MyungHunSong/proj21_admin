@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="proj21_admin.mapper.admin.member.AdminMemberMapper">
-	<resultMap id="adminResult" type="MemberDTO" >
+	<resultMap id="adminMemResult" type="MemberDTO" >
 		<result property="memberId" column="m_id"/>
 		<result property="memberPwd" column="m_passwd"/>
 		<result property="memberPwdConfirm" column="member_pwd_lock"/>
@@ -68,6 +68,26 @@
 			</choose>
 		</if>
 			m_join DESC
+	</select>
+	
+	<!-- 회원삭제 -->
+	<delete id="deleteMember" parameterType = "String">
+		delete
+			from member
+		where m_id = #{memberId}
+	</delete>
+	
+	<!-- 총 회원수 -->
+	<select id="selectTotalMembers" resultType="int">
+		select count(*)
+			from `member`;
+	</select>
+	
+	<!-- 남성 회원수 -->
+	<select id="selectAllMemberMen" resultType="int" parameterType="String">
+		select count(*)
+			from `member`
+		where m_gender = 0;
 	</select>
 	
 	<!-- 여성 회원수 -->

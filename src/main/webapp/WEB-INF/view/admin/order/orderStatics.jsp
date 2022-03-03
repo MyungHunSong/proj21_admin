@@ -4,6 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
+
+<c:set var="totalRevenue" value="${viewMap.totalRevenue}"/>
+<c:set var="totalOrderCount" value="${viewMap.totalOrderCount}"/>
+<c:set var="memberMen" value="${viewMap2.memberMen}"/>
+<c:set var="memberWomen" value="${viewMap2.memberWomen}"/>
+<c:set var="totalMember" value="${viewMap2.totalMember}"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -58,7 +65,7 @@ $(function () {
 					{ x: new Date("1 Mar 2021"), y: 4180200 },
 					{ x: new Date("1 Apr 2021"), y: 3106900 },
 					{ x: new Date("1 May 2021"), y: 4033800 },
-					{ x: new Date("1 Jun 2021"), y: 500 },								
+					{ x: new Date("1 Jun 2021"), y: ${totalRevenue} },								
 				]
 			}
 		]
@@ -137,7 +144,7 @@ $(function () {
 					{ x: new Date("1 Mar 2021"), y: 383 },
 					{ x: new Date("1 Apr 2021"), y: 334 },
 					{ x: new Date("1 May 2021"), y: 312 },
-					{ x: new Date("1 Jun 2021"), y: 500 }
+					{ x: new Date("1 Jun 2021"), y: ${totalOrderCount} }
 				]
 			}
 		]
@@ -167,8 +174,7 @@ window.onload = function () {
 	         { x: new Date("1 Mar 2021"), y: 17 },
 	         { x: new Date("1 Apr 2021"), y: 17 },
 	         { x: new Date("1 May 2021"), y: 17 },
-	         { x: new Date("1 Jun 2021"), y: 30
-	        }
+	         { x: new Date("1 Jun 2021"), y: ${memberMen}}
 	      ]
 	   }],
 	   "여성": [{
@@ -187,7 +193,7 @@ window.onload = function () {
 	         { x: new Date("1 Mar 2021"), y: 17 },
 	         { x: new Date("1 Apr 2021"), y: 19 },
 	         { x: new Date("1 May 2021"), y: 19 },
-	         { x: new Date("1 Jun 2021"), y: 21 }
+	         { x: new Date("1 Jun 2021"), y: ${memberWomen}}
 	      ]
 	   }],
 	   "남성 vs 여성": [{
@@ -230,7 +236,7 @@ window.onload = function () {
 	   },
 	   data: []
 	};
-	// 성별 차트 -엔딩-
+	// 성별 차트 -end-
 		
 	var visitorsDrilldownedChartOptions = {
 	   animationEnabled: true,
@@ -285,7 +291,7 @@ window.onload = function () {
 						<div class="card-body">
 							<h3 class="card-title">
 								총 수익 현황 &nbsp; <span class="tag tag-success" id="revenue-tag">
-								<fmt:formatNumber value="500" type="number" /> 원
+								<fmt:formatNumber value="${totalRevenue+14100000}" type="number" /> 원
 								</span>
 							</h3>
 							<br>

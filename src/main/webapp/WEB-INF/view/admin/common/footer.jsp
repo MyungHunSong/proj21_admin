@@ -9,8 +9,7 @@
 <body>
  <center>
     <footer class="footer text-center">
-                팀원 파트별 공부법.
-          </footer>
+   </footer>
          
 </center>
 </body>

@@ -44,8 +44,8 @@
 	
 	<!-- 주문이 있는지 없는지 확인 -->
 	<select id="atLeastOneOrder" resultType="String">
-		select if(count(*=0), 'false', 'true)
-		from `order`
+		select if(count(*)=0, 'false','true')
+	from `order`;
 	</select>
 	
 	<!-- 총 판매 금액 -->
