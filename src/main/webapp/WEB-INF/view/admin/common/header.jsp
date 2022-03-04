@@ -9,7 +9,6 @@
     <link href="${contextPath}/resources/admin/dist/css/1style.min.css" rel="stylesheet">
 </head>
 <body>
-
 	<!-- ============================================================== -->
 	<!-- Preloader - style you can find in spinners.css -->
 	<!-- ============================================================== -->

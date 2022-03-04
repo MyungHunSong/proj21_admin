@@ -15,4 +15,6 @@ public interface AdminMemberService {
 	
 	// 반품했을 시 수정되는 정보
 	int changeMember(Map<String, Object> changeMap);
+	
+	void deleteMember(String memberId);
 }

@@ -203,3 +203,9 @@ select  distinct a.*
 			) a, product p
 			where p.pro_num = a.pro_num
 			order by a.order_code desc;
+		
+-- 시발 이게 않되
+select m_id, m_name, m_point, m_join, m_total_order, m_total_buy
+	from `member` 
+where m_name like concat('%', '이', '%')
+order by m_join desc;

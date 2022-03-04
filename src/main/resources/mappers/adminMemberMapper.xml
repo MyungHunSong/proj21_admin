@@ -41,33 +41,49 @@
 	</update>
 	
 	<!-- 회원 검색 조건문 -->
-	<select id="selectAllMemberList" resultMap="adminMemResult">
-		SELECT m_id, m_name, m_gender, m_point, m_join, m_total_order, m_total_buy	
-			FROM MEMBER
-		<trim prefix="WHERE" prefixOverrides="AND/OR">
-		<!-- 아래 tutorId != null 조건이 참이면 앞부분에서 where 자동 추가 -->
+	<select id="selectAllMemberList" resultMap="adminMemResult" >
+		
+		SELECT m_id, m_name, m_gender, m_point, m_join, m_total_order, m_total_buy
+		  FROM MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<!-- 아래 tutordId != null 조건이 참이면 앞부분에 where 자동 추가 -->
+			<!-- 아래 tutordId != null 조건이 참이면 앞부분에 where 자동 추가 -->
 			<if test="keyword != null and !keyword.equals('')">
-				m_name LIKE CONCAT('%', #{keyword}, '%')
-			</if>
-			<!-- 만약 where가 추가 된 경우 and 절 추가, where 존재하지 않는 경우 where 추가하고 and 제거 -->
-			<if test="memberGender != null and !memberGender.equals('')">
-				and m_gender = #{memberGender}
-			</if>
+		            m_name LIKE CONCAT('%',#{keyword},'%')
+		    </if>
+		    <!-- 만약 where가 추가 된 경우 and 절 추가, where 존재하지 않는 경우 where 추가하고 and 제거 -->
+		    <if test="memberGender != null and !memberGender.equals('')">
+		            and m_gender = #{memberGender}
+		    </if>
 		</trim>
-		<if test="memberTotalOrder != null and !memberTotalOrder.equals('')">
+		 ORDER BY
+		<!-- 총 주문 금액 이 빈칸이 아닐때 -->
+		<if test="memberTotalBuy !=null and !memberTotalBuy.equals('')">
 			<choose>
-				<!-- total_order_desc 와 같으면 내림차순 정렬 -->
-				<when test="memberTotalOrder.equals('total_order_desc)">
-					m_total_order DESC,	
+				<!-- total_buy_desc 이면 내림차순 정렬 -->
+				<when test="memberTotalBuy.equals('total_buy_desc')">
+					m_total_buy DESC,
 				</when>
-			
-				<!-- 반대면 오름차순 -->
-				<when test="memberTotalOrder.equals('total_order_asc')">
-				m_total_order ASC,
+				<!-- total_buy_asc 이면 오름차순 정렬 -->
+				<when test="memberTotalBuy.equals('total_buy_asc')">
+					m_total_buy ASC,
 				</when>
 			</choose>
+		</if>  
+		<!-- 총 주문 량 이 빈칸이 아닐때 -->
+		<if test="memberTotalOrder !=null and !memberTotalOrder.equals('')">
+			<choose>
+				<!-- total_order_desc 이면 내림차순 정렬 -->
+				<when test="memberTotalOrder.equals('total_order_desc')">
+					m_total_order DESC,
+				</when>
+				<!-- total_order_desc 이면 내림차순 정렬 -->
+				<when test="memberTotalOrder.equals('total_order_asc')">
+					m_total_order ASC,
+				</when>
+			</choose> 
 		</if>
-			m_join DESC
+					m_join DESC
 	</select>
 	
 	<!-- 회원삭제 -->
@@ -98,7 +114,7 @@
 	</select>
 	
 	<!-- 검색한 회원 수 -->
-	<select id="selectMembers" resultType="int" parameterType="map">
+	<select id="selectedMembers" resultType="int" parameterType="map">
 	select count(*)
 	from `member`
 	<choose>

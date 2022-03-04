@@ -7,7 +7,7 @@ import proj21_admin.dto.member.MemberDTO;
 
 public interface AdminMemberMapper {
 
-	List<MemberDTO> selectAllMembersList(Map<String, Object> pagingMap);
+	List<MemberDTO> selectAllMemberList(Map<String, Object> pagingMap);
 	
 	// 전체수
 	int selectTotalMembers();

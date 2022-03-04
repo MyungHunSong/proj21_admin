@@ -11,6 +11,7 @@
 
 </head>
 <body>
+${authInfo.id }
 	<header id="header">
 			<div class="top">
 				<!-- https://icons8.com/icon/JWv_lqo5fs4F/shopaholic 로고 사용 -->
@@ -57,6 +58,12 @@
 					<li>
 						<a href="logout"><img src="https://img.icons8.com/ios-filled/50/000000/logout-rounded-left.png" style="width:24px; height: 24px; "/></a>
 						<ul id="menu_info"><li>로그아웃</li></ul>
+					</li>	
+				</c:if>
+				
+				<c:if test="${authInfo.id == 'admin' }">
+					<li>
+						<a href="${contextPath}/admin/order/orderStatics">관리자 페이지</a>
 					</li>	
 				</c:if>	
 			</ul>
