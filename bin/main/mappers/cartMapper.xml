@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="proj21_admin.mapper.order.cartMapper">
+<mapper namespace="proj21_admin.mapper.order.CartMapper">
 	<resultMap type="CartDTO" id="ResCart">
 		<id property="cartNum" column="cart_num"/>
 		<result property="cartProQuantity" column="cart_pro_quantity"/>
@@ -16,7 +16,7 @@
 	
 	<sql id="selectSQL">
 		select cart_num, c.cart_member_id, c.cart_pro_num, cart_pro_quantity, p.pro_imgfilename, p.pro_name, p.pro_price,p.pro_size, p.pro_salerate, p.pro_color, p.pro_quantity
- 			from cart c join productall p on c.cart_pro_num = p.pro_num;
+ 			from cart c join productall p on c.cart_pro_num = p.pro_num
 	</sql>
 	
 	<sql id="whereSQL">
@@ -25,7 +25,7 @@
 				and cart_num = #{cartNum}
 			</if>
 			<if test="memberId != null">
-				and cart_member_Id = #{memberId.memberId}
+				and cart_member_id = #{memberId.memberId}
 			</if>
 			<if test="cartProNum != null">
 				and cart_pro_num = #{cartProNum.proNum}
@@ -37,7 +37,7 @@
 	<select id="flagInCart" parameterType = "String" resultType="String">
 		select if(count(cart_pro_num) = 0, 'false', 'true')
 			from cart
-			where cart_member_Id = #{memberId}
+			where cart_member_id = #{memberId}
 	</select>
 	
 	<!-- selectCartByMemberId -->
@@ -66,7 +66,7 @@
 	<!-- 카트에 추가  -->
 	<insert id="insertCart">
 		insert into cart
-			(cart_member_Id, cart_pro_num, cart_pro_quantity)
+			(cart_member_id, cart_pro_num, cart_pro_quantity)
 		values 
 			(#{memberId.memberId}, #{cartProNum.proNum}, #{cacrtProQuantity})	
 	</insert>

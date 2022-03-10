@@ -84,6 +84,8 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 		// 2. 가져온 멤버에서 멤버 코드 가져오기
 		// 2-1. 주문한 이력 있다면
 		String MemberId = member.getMemberId();
+		
+		System.out.println("AdminMemberServiceImpl getMemberId ? : " + MemberId);
 		String orderFlag = adminOrderMapper.haveOrdered(MemberId);
 		
 		System.out.println("배송 상태 : " + orderFlag);

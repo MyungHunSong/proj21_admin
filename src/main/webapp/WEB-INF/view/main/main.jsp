@@ -21,8 +21,7 @@ console.log(count);
 	<section id="container">
 		<div class="box">
 			<p>1번 블록</p>
-		</div>
-		
+		</div>		
 		<div class="box2">
 			<p>2번째 블록</p>
 		</div>

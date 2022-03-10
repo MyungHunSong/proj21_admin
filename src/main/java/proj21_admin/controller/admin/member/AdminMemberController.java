@@ -1,5 +1,6 @@
 package proj21_admin.controller.admin.member;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import proj21_admin.service.admin.member.AdminMemberService;
 
@@ -78,10 +81,68 @@ public class AdminMemberController {
 	}
 	
 	@RequestMapping("viewMember")
-	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam (value="memberKeyword", required=false) String memberKeyWord,
+			@RequestParam (value="memberId", required=false) String memberId) {
+		// 1. 선언 부분
+		ModelAndView mav = new ModelAndView();
+		Map searchMap = new HashMap();
+		Map<String, Object> viewMap = new HashMap();
+		
+		HttpSession session = request.getSession();
+		
+		
+		if(session.getAttribute("side_menu") != null) {
+			session.removeAttribute("side_menu");
+		}
+		session.setAttribute("side_menu", "side_member");
+		
+		if(memberId == null) {
+			memberId = "test01";
+		}
+		if (memberId != null && !memberId.equals("")) {
+			searchMap.put("memberId", memberId);
+		}
+		if(memberKeyWord == null) {
+			memberKeyWord = "test01";
+		}
+		if (memberKeyWord != null && !memberKeyWord.equals("")) {
+			searchMap.put("memberKeyWord", memberKeyWord);
+			System.out.println("컨트롤러 에서 memberId : " + memberId);
+			System.out.println("컨트롤러 에서 memberKeyWord" + memberKeyWord);
+		}
+		
+		// 멤버 상세 저오 받아옴.
+		// 그래프 사용 할곳.
+		viewMap = adminMemberService.viewMember(searchMap);
+		mav.setViewName("admin/member/viewMember");
+		
+		mav.addObject("viewMap", viewMap);
+		
+		return mav;
+	}
+	
+	@RequestMapping("deleteMember")
+	public ModelAndView deleteMember(@RequestParam(value="memberId", required = false) String memberId,
+		HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("admin/member/viewMember");
+		adminMemberService.deleteMember(memberId);
+		
+		mav.setViewName(memberId);
+		
+		return mav;
+	}
+	
+	//listMember.jsp 검색 : 멤버 이름 검색하는 컨트롤러
+	@RequestMapping(value = "searchMember", method = { RequestMethod.POST })
+	public ModelAndView searchMember(@RequestParam(value = "memberSearch", required = false) String memberSearch, RedirectAttributes redir,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		
+		
+		redir.addAttribute("memberKeyword",memberSearch);
+		mav.setViewName("redirect:/admin/member/viewMember");
 		
 		return mav;
 	}

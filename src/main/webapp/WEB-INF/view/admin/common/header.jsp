@@ -70,7 +70,7 @@
 					<li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"  aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">회원 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level">
 							<li class="sidebar-item"><a href="${contextPath}/admin/member/listMembers" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 목록 </span></a></li>
-							<li class="sidebar-item"><a href="${contextPath}/admin/member/viewMember" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 활동 정보 </span></a></li>
+							<li class="sidebar-item"><a href="${contextPath}/admin/member/viewMember?memberId=admin" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 회원 활동 정보 </span></a></li>
 							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 리뷰 관리 </span></a></li>
 						</ul>
 					</li>
@@ -89,5 +89,9 @@
 		</aside>
 	</div>
 </body>
+<!-- 컨트롤러 지정이 않되 있어서 자체 사용이 불가능함 
+	<c:set var="memberId" value="${memberId.memberId}"/>
+-->
+
 
 </html>

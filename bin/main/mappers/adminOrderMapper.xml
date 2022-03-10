@@ -4,8 +4,8 @@
 	<resultMap id="orderResult" type="OrderDTO" >
 		<result property="orderProNum" column="order_pro_num" />
 			<result property="orderCode" column="order_code" />
-			<result property="orderMemberId" column="order_member_id" />
-			<result property="orderMemberName" column="order_member_name" />
+			<result property="orderMemberId" column="order_m_id" />
+			<result property="orderMemberName" column="order_m_name" />
 			<result property="orderProQuantity" column="order_pro_quantity" />
 			<result property="orderValue" column="order_value" />
 			<result property="orderPrice" column="order_price" />
@@ -249,7 +249,7 @@
 		  			   delivery_status ,order_m_name, request_to_delivery, which_bank,
 					   p.pro_num, p.pro_color, p.pro_size, p.pro_name, img.pro_imgfilename
 				  FROM `order` o , product p , pro_img img
-				 WHERE o.o_pro_num = p.pro_num AND img.pro_img_state = 1 AND img.pro_num = p.pro_num AND o.order_member_id = #{orderMemberId}
+				 WHERE o.o_pro_num = p.pro_num AND img.pro_img_state = 1 AND img.pro_num = p.pro_num AND o.order_m_id = #{orderMemberId}
 					   <choose>
 					   <when test="orderProNum != null">
 					   AND
