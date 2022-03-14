@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proj21_admin.mapper.admin.product.AdminProductMapper">
+	<!-- Product property=> ProductDTO 변수들 column => MySQL의 데이터 이름들-->
+	<resultMap type="ProductDTO" id="adminProductResult">
+		<id property="proNum" column="pro_num" />
+		<result property="proName" column="pro_name"/>
+		<result property="proPrice" column="pro_price" />
+		
+		<result property="proSalesrate" column="pro_salesrate" />
+		<result property="proCategory" column="pro_category" />
+		<result property="proStatus" column="pro_status" />
+		
+		<result property="proImgfileName" column="pro_imageFileName" />
+		<result property="proCreDate" column="pro_cre_date" />
+		<result property="proContent" column="pro_content" />
+		
+		<result property="proSize" column="pro_size" />
+		<result property="proColor" column="pro_color" />
+		<result property="proQuantity" column="pro_quantity" />
+		<result property="proHits" column="pro_hits" />
+		<result property="proSold" column="pro_sold" />		
+	</resultMap>
+	
+	<resultMap type="ProductImageDTO" id="productImgResult">
+		<result property="proImgCode" column="pro_img_code"/>
+		<result property="proNum" column="pro_num"/>
+		<result property="proImageFileName" column="pro_imagefilename"/>
+		<result property="proImgState" column="pro_img_state"/>
+	</resultMap>
+	
+	<!-- 총 제품 수 -->
+	<select id="selectTotalProducts" resultType="int">
+		select count(pro_num)
+			from product;
+	</select>
+	
+	<!-- 신상품 -->
+	<select id="selectNewProducts" resultType="int">
+		select count(pro_num)
+			from product 
+		where pro_status = '신상';
+	</select>
+	
+	<!-- 팬마량이 많은 제품 -->
+	<select id="selectBestProducts" resultType="int">
+		select count(pro_num) 
+			from product
+		where pro_status = '최고';
+	</select>
+	
+	<!-- 세일중인 제품 -->
+	<select id="selectOffProducts" resultType="int">
+		select count(pro_num) 
+			from product
+		where pro_status = '세일';
+	</select>
+	
+	<!-- 추천상품 -->
+	<select id="selectSteadyProducts" resultType="int" >
+			select count(pro_num)
+				from product	
+			where pro_status='추천';
+	</select>
+
+	<!-- 판매 중지된 상품 -->
+	<select id="selectOutProducts" resultType="int" >
+			select count(pro_num) 
+				from product	
+			where pro_status='품절';
+	</select>
+	
+	<!-- 조건 별 제품 리스트 뽑아오기 -->
+	<select id="selectAllProducts" resultMap="adminProductResult">
+		select a.*
+			select (select @ROWNUM := @ROWNUM + 1 as rn,
+				from (select @ROWNUM := 0) R, product p join pro_img p2 on p.pro_num = p2.pro_num
+			where p2.pro_img_state = 1
+				<if test="proCategory != null and !proCategory.equals('')">
+					and p.pro_category = #{proCategory}
+				</if>
+				
+				<if test="proStatus != null and !proStatus.equals('')">
+					and p.pro_status = #{proStatus}
+				</if>
+				
+				<if test="keyword != null and !keyword.equals('')">
+					and p.pro_name like concat('%', #{keyword}, '%')
+				</if>
+			order by 
+				<if test="orderPrice != null and !orderPrice.equals('')">
+					<choose>
+						<when test="orderPrice.equals('price_desc')">
+							p.pro_price desc,
+						</when>
+						<when test="orderPrice.equals('price_asc)">
+							p.pro_price asc,
+						</when>
+					</choose>
+				</if>
+				<if test="orderSalesrate !=null and !orderSalesrate.equals('')">
+					<choose>
+						<when test="orderSalesrate.equals('salesRate_desc')">
+							b.pro_salesrate DESC ,
+						</when>
+						<when test="orderSalesrate.equals('salesRate_asc')">
+							b.pro_salesrate ASC ,
+						</when>
+					</choose>
+				</if>
+				<if test="orderHits !=null and !orderHits.equals('')">
+					<choose>
+						<when test="orderHits.equals('hits_desc')">
+							b.pro_hits DESC ,
+						</when>
+						<when test="orderHits.equals('hits_asc')">
+							b.pro_hits ASC ,
+						</when>
+					</choose>
+				</if>	
+			 p.pro_num) a	
+			WHERE rn
+			 	BETWEEN
+			 	(#{section,jdbcType=NUMERIC}-1)*200+(#{pageNum,jdbcType=NUMERIC}-1)*20+1
+				AND
+			 	(#{section,jdbcType=NUMERIC}-1)*200+#{pageNum,jdbcType=NUMERIC}*20
+			 
+	</select>
+	
+	<!-- 검색한 제품 수 -->
+	<!-- resultType 은 맵핑된 method의 TYPE, parameterType 은 맵핀된 method의 매게변수 -->
+	<select id="selectedTotalProducts" resultType="int" parameterType="map">
+		select count(pro_num)
+			from product
+		where pro_num > 0
+		<if test="proCategory !=null and !proCategory.equals('')">
+			AND pro_category=#{proCategory}        
+	    </if>
+	    <if test="proStatus !=null and !proStatus.equals('') ">
+			AND pro_status=#{proStatus}        
+	    </if>
+	    <if test="keyword !=null and !keyword.equals('')">
+	        AND pro_name like CONCAT('%',#{keyword},'%')
+	    </if>
+	</select>
+	
+	<!-- 주문 상품수 -->
+	<select id="selectOrderedTotal" resultType="int" parameterType="map">
+		select count(*)
+			from prodcut
+		<choose>
+			<when test="keyword !=null and !keyword.equals('')">
+				where pro_name like CONCAT('%',#{keyword},'%')
+			</when>
+		</choose>
+		<choose>
+			<when test="proStatus !=null and !proStatus.equals('') and keyword !=null and !keyword.equals('')">
+				and pro_status=#{proStatus}  
+			</when>
+			
+			<when test="proStatus !=null and !proStatus.equals('') and keyword ==null and keyword.equals('')">
+				where pro_status=#{proStatus}  
+			</when>
+		</choose>
+		<choose>
+			<when test="proCategory !=null and !proCategory.equals('') and keyword !=null and !keyword.equals('') and proStatus !=null and !proStatus.equals('')">
+				and pro_category=#{proCategory}   
+			</when>
+			<when test="proCategory !=null and !proCategory.equals('') and keyword ==null and keyword.equals('') and proStatus ==null and proStatus.equals('')">
+				where pro_category=#{proCategory}  
+			</when>
+		</choose>	
+	</select>
+</mapper> 
