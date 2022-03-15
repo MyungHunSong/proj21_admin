@@ -135,6 +135,11 @@ public class AdminMemberController {
 	}
 	
 	//listMember.jsp 검색 : 멤버 이름 검색하는 컨트롤러
+	// RedirectAttribute 사용 -> 이유: url 숨기기 위하여  Mapping 경로 url -> ?변수 = 숫자 or 문자(열)
+	// 1. @RequestMapping (vaule 를 찍어주면 그 후에 =? , (method = {RequestMethod.post or get (사용할 요청방식)}))
+	// 2. 매게 변수에 RedircetAttribute 기입 
+	// 3. redir변수.addAttribute("들어갈 변수", 매게 변수); 
+	// 4. 사용 X url : searchMember?memberKeyword = 숫자. 사용 O searchMember 후 안보임
 	@RequestMapping(value = "searchMember", method = { RequestMethod.POST })
 	public ModelAndView searchMember(@RequestParam(value = "memberSearch", required = false) String memberSearch, RedirectAttributes redir,
 			HttpServletRequest request, HttpServletResponse response) {

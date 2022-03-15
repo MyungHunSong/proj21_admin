@@ -9,7 +9,7 @@ public interface AdminProductService {
 	Map<String, Object> listProducts(Map<String, Object> paginMap);
 	
 	// 제품 추가
-	int addNewProduct(Map<String, Object> newProdcutMap);
+	int addNewProduct(Map<String, Object> newProductMap);
 	
 	// 제품 수정
 	int modfiyModel(ProductDTO product);
