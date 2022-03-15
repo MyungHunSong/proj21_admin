@@ -11,7 +11,7 @@
 		<result property="proCategory" column="pro_category" />
 		<result property="proStatus" column="pro_status" />
 		
-		<result property="proImgfileName" column="pro_imageFileName" />
+		<result property="proImgfileName" column="pro_imgfilename" />
 		<result property="proCreDate" column="pro_cre_date" />
 		<result property="proContent" column="pro_content" />
 		
@@ -25,7 +25,7 @@
 	<resultMap type="ProductImageDTO" id="productImgResult">
 		<result property="proImgCode" column="pro_img_code"/>
 		<result property="proNum" column="pro_num"/>
-		<result property="proImageFileName" column="pro_imagefilename"/>
+		<result property="proImageFileName" column="pro_imgfilename"/>
 		<result property="proImgState" column="pro_img_state"/>
 	</resultMap>
 	
@@ -171,4 +171,91 @@
 			</when>
 		</choose>	
 	</select>
+	
+	<!-- CRUD -->
+	<!-- 제품 추가 -->
+	<insert id="insertNewProduct" parameterType="map">
+		insert into product
+			(pro_num,pro_category,pro_name,pro_price,pro_content,pro_salerate,pro_status,pro_color,pro_size,pro_quantity)
+		values 
+ 			(#{proNum}, #{proCategory}, #{proName}, #{proPrice}, #{proContent}, #{proSalesrate}, #{proStatus}, #{proColor}, #{proSize}, #{proQuantity});
+	</insert>
+	
+	<!-- 제품 사진 추가 -->
+	<insert id="insertProductImageFile" parameterType="map">
+		insert into pro_img 
+			(pro_num, pro_imgfilename, pro_img_state)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.proNum}, #{item.proImageFileName}, #{item.proImgState});
+		</foreach>			
+	</insert>
+	
+	<!-- 제품 재입고 -->
+	<delete id="deleteProducts" parameterType="map">
+		delete
+			from product
+		<where>
+			pro_num in
+			<foreach collection="deletelist" item="proNum" open="(" close=")" separator=" ," >
+				#{proNum}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 제품 종류 검색 -->
+	<select id="selectAllTShirts" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 1
+	</select>
+	
+	<select id="selectAllLongT" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 2	
+	</select>
+	
+	<select id="selectAllSlvless" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 3
+	</select>
+	
+	<select id="selectAllHood" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 4
+	</select>
+	
+	<select id="selectAllShirts" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 5
+	</select>
+	
+	<select id="selectAllSweater" resultType="int">
+		select count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 6
+	</select>
+	
+	<!-- 제품 수정 -->
+	<update id="updateProduct">
+		update product
+			<set>
+				pro_quantity = pro_quantity + #{proQuantity}
+			</set>
+		where pro_num = #{proNum};	
+	</update>
+	
+	<update id="updateProduct2">
+		update product
+			<set>
+				pro_quantity = pro_quantity + #{change_orderProQuantity},
+				pro_sold = pro_sold - 1,
+			</set>
+			where 
+				pro_num = #{change_proNum}
+	</update>
 </mapper> 

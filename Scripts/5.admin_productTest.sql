@@ -50,3 +50,57 @@ select a.*
 	where rn
 	between (10 - 1) * 200 + (10 - 1) * 20 + 1
 	and (10 - 1) * 200 + (10) * 20;
+
+-- 제품 추가
+insert into product
+	(pro_num,pro_category,pro_name,pro_price,pro_content,pro_salerate,pro_status,pro_color,pro_size,pro_quantity)
+values 
+ (,,,,,,)
+select * from product; 
+-- 제품 사진 추가
+insert into pro_img 
+	(pro_num, pro_imgfilename, pro_img_state)
+values
+	(,,,)
+-- 제품 재입고 (삭제)
+delete 
+	from product 
+where pro_num = '';	
+	
+-- 제품별 검색 카테고리로
+-- TShirts 
+-- distinct 중복값 제거 substring (column,  숫자(부터), 숫자(까지) )
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 1;
+
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 2;
+	
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 3;
+	
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 4;
+	
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 5;	
+
+select  count(distinct substr(pro_num, 1, 3))
+			from product
+		where pro_category = 6;	
+
+-- 제품 수정1
+update product 
+	set pro_quantity = pro_quantity + 1
+where
+	pro_num = 1;
+-- 제품 수정2 (팔린거 갯수 -1)
+update product 
+	set pro_quantity = pro_quantity + 1 ,
+	set pro_sold = pro_sold-1
+where pro_num = 1;
