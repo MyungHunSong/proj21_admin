@@ -55,18 +55,18 @@
 </head>
 <body>
 	<div id="container">
-	<!-- 공통 레이아웃 'header' 부분 -->
-		<div id="header">
-			<tiles:insertAttribute name="admin_header"/>
+		<!-- 공통 레이아웃 'header' 부분 -->
+			<div id="header">
+				<tiles:insertAttribute name="admin_header"/>
+			</div>
+		<!-- 공통 레이아웃 'body' 부분 -->
+		<div id="content">
+			<tiles:insertAttribute name="admin_body" />
 		</div>
-	<!-- 공통 레이아웃 'body' 부분 -->
-	<div id="content">
-		<tiles:insertAttribute name="admin_body" />
-	</div>
-	<!-- 공통 레이아웃 'footer'부분 -->
-	<div id="footer">
-		<tiles:insertAttribute name="admin_footer" />
-	</div>
+		<!-- 공통 레이아웃 'footer'부분 -->
+		<div id="footer">
+			<tiles:insertAttribute name="admin_footer" />
+		</div>
 	</div>
 </body>
 </html>

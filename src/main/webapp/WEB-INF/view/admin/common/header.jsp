@@ -76,8 +76,8 @@
 					</li>
 					<li class="sidebar-item"><a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">상품 </span></a>
 						<ul aria-expanded="false" class="collapse  first-level">
-							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 관리 </span></a></li>
-							<li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 등록 </span></a></li>
+							<li class="sidebar-item"><a href="${contextPath }/admin/product/listProducts" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 관리 </span></a></li>
+							<li class="sidebar-item"><a href="${contextPath }/admin/product/addNewProductForm" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 상품 등록 </span></a></li>
 							<li class="sidebar-item"><a href="${contextPath}/admin/order/listOrders" class="sidebar-link"><i class="mdi mdi-emoticon-cool"></i><span class="hide-menu"> 주문/배송 관리 </span></a></li>
 						</ul>
 					</li>

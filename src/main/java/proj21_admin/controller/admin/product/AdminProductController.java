@@ -15,11 +15,14 @@ import javax.servlet.http.HttpSession;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,39 +43,42 @@ public class AdminProductController {
 	private AdminProductService adminProductService;
 	
 	@RequestMapping("listProducts")
-	public ModelAndView listProducts(HttpServletRequest request, HttpServletResponse response, HttpSession session
-			,@RequestParam(value="total", required = false) String total 
-			,@RequestParam(value="proName", required = false) String keyword
-			,@RequestParam(value="proStatus", required = false) String proStatus
-			,@RequestParam(value="proCategory", required = false) String proCategory
-			,@RequestParam(value="proPrice", required = false) String proPrice 
-			,@RequestParam(value="proSalesRate", required = false) String proSalesRate
-			,@RequestParam(value="proHits", required = false) String proHits
-			,@RequestParam(value="proSold", required = false) String proSold
-			) {
-		session = request.getSession();
-		if(session.getAttribute("side_menu") != null) {
+	public ModelAndView listProducts(
+			@RequestParam(value = "total", required = false) String total,
+			@RequestParam(value = "proName", required = false) String keyword,
+			@RequestParam(value = "proStatus", required = false) String proStatus,
+			@RequestParam(value = "proCategory", required = false) String proCategory,
+			@RequestParam(value = "proPrice", required = false) String proPrice,
+			@RequestParam(value = "proSalesRate", required = false) String proSalesRate,
+			@RequestParam(value = "proHits", required = false) String proHits,
+			@RequestParam(value = "proSold", required = false) String proSold,
+			HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("side_menu") != null) {
 			session.removeAttribute("side_menu");
-		}else {
-			session.setAttribute("side_menu", "side_product");
 		}
-		
-		// 사용할 모델 선언 (return 을 위해서)
+		session.setAttribute("side_menu", "side_product");
+
+		System.out.println("RequestParam==keyword :" + keyword);
+		System.out.println("RequestParam==proStatus :" + proStatus);
+		System.out.println("RequestParam==proCategory :" + proCategory);
+		System.out.println("RequestParam==proPrice :" + proPrice);
+		System.out.println("RequestParam==proSalesRate :" + proSalesRate);
+		System.out.println("RequestParam==proHits :" + proHits);
+
 		ModelAndView mav = new ModelAndView();
+
+		Map<String, Object> pagingMap = new HashMap();
 		
-		// 데이터를 삽입할 Map 선언 1. 페이징 데이터 2. 일반 productMaps
-		Map<String, Object> pagingMap = new HashMap<String, Object>();
-		Map<String, Object> productsMap = new HashMap<String, Object>();
+		Map<String, Object> productsMap = new HashMap();
 		
-		
-		// paging을 위한 section, pagieNum 선언후 사용
-		String _section = (String)request.getParameter("section");
-		String _pageNum = (String)request.getParameter("pageNum");
-		
-		int section = Integer.parseInt((_section == null) ? "1" : _section);
-		int pageNum = Integer.parseInt((_pageNum == null) ? "1" : _pageNum);
-		
-		// paging 데이터 
+		// 자주 사용하는데 왜 섹션을 요청 하는거지? 모르겠다.
+		String _section = (String) request.getParameter("section");
+		String _pageNum = (String) request.getParameter("pageNum");
+
+		int section = Integer.parseInt(((_section == null) ? "1" : _section));
+		int pageNum = Integer.parseInt(((_pageNum == null) ? "1" : _pageNum));
+
 		pagingMap.put("section", section);
 		pagingMap.put("pageNum", pageNum);
 		pagingMap.put("total", total);
@@ -82,24 +88,34 @@ public class AdminProductController {
 		pagingMap.put("proPrice", proPrice);
 		pagingMap.put("proSalesRate", proSalesRate);
 		pagingMap.put("proHits", proHits);
-		
-		// productsMap 에 사용할 Service.listProducts 가져오기
+
 		productsMap = adminProductService.listProducts(pagingMap);
-		
+		System.out.println("key : " + productsMap.get("productsList"));
 		productsMap.put("section", section);
 		productsMap.put("pageNum", pageNum);
 		productsMap.put("keyword", keyword);
-		productsMap.put("proSold", proSold);		
+		productsMap.put("proSold", proSold);
+		
 		productsMap.put("proCategory", proCategory);
 		productsMap.put("proPrice", proPrice);
 		productsMap.put("proSalesRate", proSalesRate);
 		productsMap.put("proHits", proHits);
 		productsMap.put("proStatus", proStatus);
+
+		System.out.println("productsMap :section=" + section);
+		System.out.println("productsMap :pageNum=" + pageNum);
+		System.out.println("productsMap :keyword=" + keyword);
+		System.out.println("productsMap :proSold=" + proSold);
+		System.out.println("productsMap :proCategory=" + proCategory);
+		System.out.println("productsMap :proPrice=" + proPrice);
+		System.out.println("productsMap :proSalesRate=" + proSalesRate);
+		System.out.println("productsMap :proHits=" + proHits);
+		System.out.println("productsMap :proStatus=" + proStatus);
 		
-		// addObject시 View에서 사용가능 
-		mav.addObject("prodcutsMap", productsMap);
+		// mav.addObject 덕에 이페이지 안에선 c:set ${productsMap.something} 사용 가능
+		mav.addObject("productsMap", productsMap);
 		mav.setViewName("admin/product/listProducts");
-		
+
 		return mav;
 	}
 	
@@ -170,7 +186,101 @@ public class AdminProductController {
 		}
 		ProductDTO product = new ProductDTO();
 		
-		product.setProNum(0);
-		return null;
+		product.setProNum(Integer.parseInt(request.getParameter("proNum")));
+		System.out.println("upModel 의 request.getParameter(proNum) : " + request.getParameter("proNum"));
+		product.setProQuantity(Integer.parseInt(request.getParameter("proQuantity")));
+		System.out.println("upModel 의 request.getParameter(proQuantity) : " + request.getParameter("proQuantity"));
+
+		adminProductService.modfiyModel(product);
+		
+		String message = null;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		message="<script>";
+		message += "alert('모델 추가 완료');";
+		message += "self.close();";
+		message += "opener.parent.location.reload();";
+		message += "</script>";
+		
+		resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+
+		return resEnt;
+	}
+	
+	@RequestMapping("upModelForm")
+	public ModelAndView addNewModelForm(@RequestParam(value="proNum") String proNum
+			,@RequestParam(value="proCategory") String proCategory
+			,@RequestParam(value="proColor") String proColor
+			,@RequestParam(value="proSize") String proSize
+			,HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("proNum", proNum);
+		mav.addObject("proCategory", proCategory);
+		mav.addObject("proColor", proColor);
+		mav.addObject("proSize", proSize);
+
+		mav.setViewName("admin/product/upModelForm");
+		
+		return mav;		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "deleteProducts", method = RequestMethod.POST)
+	public ResponseEntity deleteProducts(String[] _delete_val
+										,HttpServletRequest request
+										,HttpServletResponse response ) {
+		
+		ArrayList<String> deleteList = new ArrayList<String>();
+		for(String value : _delete_val) {
+			System.out.println("deleteProdcuts 의 for 문 value : " + value);
+			deleteList.add(value);
+		}
+		
+		// ResponseEntity 의 사용 구조
+		// 1. 선언부
+		String message = null;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		// 2. 헤더에 추가 부. jsp에 찍어줄것들
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		Map<String, Object> deleteMap = new HashMap<String, Object>();
+		
+		deleteMap.put("deleteList", deleteList);
+		try {
+			adminProductService.deleteProducts(deleteMap);
+			
+			message="<scrpit>";
+			message += ";";
+			message += "alert('선택한 리뷰 삭제를 완료 하였습니다.);";
+			message+=" location.href='"+request.getContextPath()+"/admin/review/listReviews'; ";
+			message += "</script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);		
+		}catch (Exception e) {
+			message="<script> ";
+			message+=" alert('선택한 리뷰 삭제실패하셨습니다..');";
+			message+=" location.href='"+request.getContextPath()+"/admin/review/listReviews'; ";
+			message+=" </script>";
+			
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			
+		}
+		return resEnt;
+	}
+	
+	@RequestMapping("productStatics")
+	public ModelAndView productStatics(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView mav = new ModelAndView();
+				
+		Map<String, Object> viewMap = adminProductService.getProductStatics();
+		
+		mav.addObject("viewMap", viewMap);
+		mav.setViewName("admin/product/productStatics");
+		
+		return mav;
 	}
 }

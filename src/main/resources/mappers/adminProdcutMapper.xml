@@ -11,7 +11,7 @@
 		<result property="proCategory" column="pro_category" />
 		<result property="proStatus" column="pro_status" />
 		
-		<result property="proImgfileName" column="pro_imgfilename" />
+		<result property="proImgFileName" column="pro_imgfilename" />
 		<result property="proCreDate" column="pro_cre_date" />
 		<result property="proContent" column="pro_content" />
 		
@@ -72,10 +72,10 @@
 	
 	<!-- 조건 별 제품 리스트 뽑아오기 -->
 	<select id="selectAllProducts" resultMap="adminProductResult">
-		select a.*
-			select (select @ROWNUM := @ROWNUM + 1 as rn,
-				from (select @ROWNUM := 0) R, product p join pro_img p2 on p.pro_num = p2.pro_num
-			where p2.pro_img_state = 1
+		SELECT a.*
+  		  FROM (SELECT @ROWNUM := @ROWNUM+1 AS rn ,p.*,p2.pro_imgfilename
+		          FROM ( SELECT @ROWNUM :=0 ) R, product p JOIN pro_img p2 ON p.pro_num = p2.pro_num
+		         WHERE p2.pro_img_state=1
 				<if test="proCategory != null and !proCategory.equals('')">
 					and p.pro_category = #{proCategory}
 				</if>
@@ -147,7 +147,7 @@
 	<!-- 주문 상품수 -->
 	<select id="selectOrderedTotal" resultType="int" parameterType="map">
 		select count(*)
-			from prodcut
+			from product
 		<choose>
 			<when test="keyword !=null and !keyword.equals('')">
 				where pro_name like CONCAT('%',#{keyword},'%')
