@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.message.MessageCollectionMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -117,6 +118,94 @@ public class AdminProductController {
 		mav.setViewName("admin/product/listProducts");
 
 		return mav;
+	}
+	// 제품 인서트후.
+	@RequestMapping(value="addNewProduct", method = RequestMethod.POST)
+	public ResponseEntity addNewProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		
+		String imageFileName = null;
+		Map<String, Object> newProductMap1 = new HashMap<String, Object>();
+		Map<String, Object> newProductMap2 = new HashMap<String, Object>();
+		
+		String message = null;
+		String proNameCheck=multipartRequest.getParameter("proName").trim();
+		String proPriceCheck=multipartRequest.getParameter("proPrice").trim();
+		String proSalesrateCheck=multipartRequest.getParameter("proSalesrate").trim();
+		String proQuantityCheck=multipartRequest.getParameter("proQuantity").trim();
+		String proContentCheck=multipartRequest.getParameter("proContent").trim();
+		String proNumCheck=multipartRequest.getParameter("proNum").trim();
+		
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		if(proNameCheck.isEmpty() || proPriceCheck.isEmpty() ||proSalesrateCheck.isEmpty() ||proQuantityCheck.isEmpty() ||proContentCheck.isEmpty() ||proNumCheck.isEmpty() ) {
+			message = "<script> ";
+			message += " alert('빈칸이 존재합니다. 확인해 주세요.');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/admin/product/addNewProductForm';";
+			message += " </script>";
+		}else {
+			Enumeration enu = multipartRequest.getParameterNames();
+			
+			while(enu.hasMoreElements()){
+				String name = (String)enu.nextElement();
+				String value = multipartRequest.getParameter(name);
+				newProductMap2.put(name, value);
+			}
+			
+			List<ProductImageDTO> imageFileList = upload(multipartRequest);
+			
+			newProductMap1.put("imageFileList", imageFileList);
+			
+			try {
+				newProductMap1.put("proContent", multipartRequest.getParameter("proContent"));
+				newProductMap1.put("proStatus", multipartRequest.getParameter("proStatus"));
+				newProductMap1.put("proName", multipartRequest.getParameter("proName"));
+				newProductMap1.put("proNum", Integer.parseInt(multipartRequest.getParameter("proNum")));
+				newProductMap1.put("proCategory", Integer.parseInt(multipartRequest.getParameter("proCategory")));
+				newProductMap1.put("proQuantity", Integer.parseInt(multipartRequest.getParameter("proQuantity")));
+				newProductMap1.put("proSize", Integer.parseInt(multipartRequest.getParameter("proSize")));
+				newProductMap1.put("proColor", Integer.parseInt(multipartRequest.getParameter("proColor")));
+				newProductMap1.put("proSalesrate", Integer.parseInt(multipartRequest.getParameter("proSalesrate")));
+				newProductMap1.put("proPrice", Integer.parseInt(multipartRequest.getParameter("proPrice")));
+				adminProductService.addNewProduct(newProductMap1);
+				
+				String proNum = multipartRequest.getParameter("proNum");
+				
+				if(imageFileList != null && imageFileList.size() != 0) {
+					for(ProductImageDTO productImageDTO : imageFileList) {
+						imageFileName = productImageDTO.getProImageFileName();
+						File srcFile = new File(CURR_IMAGE_REPO_PATH + "\\" + imageFileName);
+						File destDir = new File(CURR_IMAGE_REPO_PATH + "\\" + proNum);
+						FileUtils.moveFileToDirectory(srcFile, destDir, true);
+					}
+				}
+				
+				message = "<script>";;
+				message += "alert('새상품이 등록되었습니다.'); ";
+				message += "location.href ='" + multipartRequest.getContextPath() +"/admin/product/addNewProductForm';";
+				message += "</script>";
+			}catch (Exception e) {
+				e.printStackTrace();
+				if(imageFileList != null && imageFileList.size() != 0) {
+					for(ProductImageDTO productImageDTO : imageFileList) {
+						imageFileName = productImageDTO.getProImageFileName();
+						File srcFile = new File(CURR_IMAGE_REPO_PATH + "\\" + imageFileName);
+						srcFile.delete();
+					}					
+				}
+				message ="<script>";
+				message += "alert('새상품 등록 실패 : 이미 있는 제품이거나, 사진이 없습니다.');";
+				message += " location.href='" + multipartRequest.getContextPath() + "/admin/product/addNewProductForm';";
+				message += " </script>";
+			}	
+		}
+		
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		
+		return resEntity;
 	}
 	
 	// 제품 추가
