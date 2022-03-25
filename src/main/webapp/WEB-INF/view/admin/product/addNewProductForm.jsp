@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+	pageEncoding="UTF-8" isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style>
 @media ( min-width : 767.98px) {
 	.card {
@@ -15,8 +13,47 @@
 	}
 }
 </style>
+<script
+	src="${contextPath}/resources/admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script
+	src="${contextPath}/resources/admin/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/extra-libs/sparkline/sparkline.js"></script>
+<!--Wave Effects -->
+<script src="${contextPath}/resources/admin/dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="${contextPath}/resources/admin/dist/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="${contextPath}/resources/admin/dist/js/custom.min.js"></script>
+<!--This page JavaScript -->
+<!-- <script src="dist/js/pages/dashboards/dashboard1.js"></script> -->
+<!-- Charts js Files -->
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/excanvas.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/jquery.flot.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/jquery.flot.pie.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/jquery.flot.time.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/jquery.flot.stack.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot/jquery.flot.crosshair.js"></script>
+<script
+	src="${contextPath}/resources/admin/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+<script
+	src="${contextPath}/resources/admin/dist/js/pages/chart/chart-page-init.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>새 상품 등록</title>
 <style>
-	table {
+table {
 	min-width: 100%;
 	margin-top: 5%;
 	/* margin-left: 20%; */
@@ -51,57 +88,62 @@ input {
 	min-width: 150px;
 }
 </style>
+</head>
 <script>
-	function readURL(input, id){
-		if(input.files && input.files[0]){
+	function readURL(input, id) {
+		if (input.files && input.files[0]) {
 			var reader = new FileReader();
-			reader.onload = function(e){
-				if(id == 'main'){
+			reader.onload = function(e) {
+				if (id == 'main') {
 					$('#preview').attr('src', e.target.result);
-				}else {
-					$('#preview' + id).attr('src', e.target.result);
+				} else {
+					$("#preview" + id).attr('src', e.target.result);
 				}
 			}
+
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-	
 	var cnt = 1;
-	function fn_addFile(){
+	function fn_addFile() {
 		var state = cnt + 1;
-		
+
 		$("#detail_list").append(
-			"디테일 이미지" + cnt + ":<input type='file' name=" + state
-			+ " id='" + cnt + "' onchange='readURL(this, this.id);' /> " +"<br>");
-		if(cnt % 2 != 0){
-			$("#image_list").append("<img src='#' width=200 height = 200 id='preview" + cnt + "' > <br>");
-		} else{
+				"디테일이미지 " + cnt + " : <input type='file' name= " + state
+						+ " id='" + cnt
+						+ "' onchange='readURL(this,this.id);' />" + "<br>");
+		if (cnt % 2 != 0) {
+			$("#image_list")
+					.append(
+							"<img src='#' width=200 height=200 id='preview"+cnt+"'> <br>");
+		} else {
 			$("#image_list").append(
-				"<img src='#' width=200 height=200 id='preview"+ cnt + "'>");
+					"<img src='#' width=200 height=200 id='preview"+cnt+"'>");
 		}
 		cnt++;
 	}
-	
+
 	function backToList(obj) {
 		obj.action = "${contextPath}/admin/product/listProducts";
 		obj.submit();
 	}
 
-	/* click시 인서트 */
-	$(
-		function(){
-			$("#proNum").on("click", function(){
-				var category = $('#proCategory').val()
-					+ $('#proColor').val()
-					+ $('#proSize').val()
-					$('#proNum').val(category)
-				
-			});
-			
-		});
+	/* pro_category_detail */
 </script>
-<title>Insert title here</title>
-</head>
+<script type="text/javascript">
+	$(
+			function() {
+
+				$("#proNum").on(
+						"click",
+						function() {
+							var category = $('#proCategory').val()
+									+ $('#proColor').val()
+									+ $('#proSize').val()
+							$('#proNum').val(category)
+						})
+			})
+</script>
 <body>
 	<!-- Controller 경로 :proj21_shop.controller.admin.product/AdminProductController 의 addNewProduct 매핑경로 -->
 	<div class="container-fluid">

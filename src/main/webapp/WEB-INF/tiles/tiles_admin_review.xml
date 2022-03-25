@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	
+
 	<definition name="admin/review/*"
 		template="/WEB-INF/view/admin/common/layout.jsp">
 		<put-attribute name="admin_title" value="레이아웃 페이지" />
@@ -11,4 +11,5 @@
 		<put-attribute name="admin_body" value="/WEB-INF/view/admin/review/{1}.jsp" />
 		<put-attribute name="admin_footer" value="/WEB-INF/view/admin/common/footer.jsp" />
 	</definition>
+
 </tiles-definitions>

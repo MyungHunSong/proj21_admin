@@ -49,6 +49,7 @@
 				$("input[type=checkbox]").prop("checked", false);
 			}
 		});
+		// 삭제 ajax활용
 		$("#delete").click(function() {
 			var delete_val = [];
 			if (confirm("정말 삭제하시겠습니까?")) {
@@ -87,6 +88,7 @@
 	}
 }
 </style>
+<!-- body부분 css -->
 <style>
 tr {
 	text-align: center;
@@ -150,6 +152,13 @@ a {
 						<h2>리뷰 목록</h2>
 						<hr>
 						<br>
+						<!-- 검색 영역 -->
+						<!-- form 
+							action 태그 : 서버 프로그램의 uri를 지정하는 역할을 한다. 컨트롤러에 있는 listReviews를 로딩해줌
+							method = "사용자가 입력한 방식을 어떤 방식으로 넘길지 말해주는 역할 (get, post) 방식이 있다.
+							주로 post를 많이사용 왜? get은 븅신같이 자신의 자취를 남겨서 보안상 취약해질수 있기에
+							member?memberid = * & memberName = * 머 이런 식으로
+						 -->
 						<form action="${contextPath }/admin/review/listReviews"
 							method="post" id="frm_search">
 							<table style="width: 100%;">
@@ -214,26 +223,26 @@ a {
 												href="${contextPath }/productDetail?proNum=${reviews.proNum}">
 													<c:choose>
 														<c:when
-															test="${reviews.reviewImagefilename2 == null || reviews.reviewImagefilename2 == ''}">
+															test="${reviews.reviewImageFileName2 == null || reviews.reviewImageFileName2 == ''}">
 															<img
 																src="${contextPath }/resources/review/images/noimage.jpg"
 																width='70' height='60' />
 														</c:when>
 														<c:otherwise>
 															<img
-																src="${contextPath }/resources/review/images/${reviews.reviewImagefilename2 }"
+																src="${contextPath }/resources/review/images/${reviews.reviewImageFileName2 }"
 																width='70' height='60' />
 														</c:otherwise>
 													</c:choose> <c:choose>
 														<c:when
-															test="${reviews.reviewImagefilename1 == null || reviews.reviewImagefilename1 == ''}">
+															test="${reviews.reviewImageFileName1 == null || reviews.reviewImageFileName1 == ''}">
 															<img
 																src="${contextPath }/resources/review/images/noimage.jpg"
 																width='70' height='60' />
 														</c:when>
 														<c:otherwise>
 															<img
-																src="${contextPath }/resources/review/images/${reviews.reviewImagefilename1 }"
+																src="${contextPath }/resources/review/images/${reviews.reviewImageFileName1 }"
 																width='70' height='60' />
 														</c:otherwise>
 													</c:choose>
@@ -255,7 +264,7 @@ a {
 									type="button" value="삭제하기" id="delete" /></td>
 							</tr>
 						</table>
-
+						<!-- paging 방식 결국 controller -> service에 자료가 담겨저 있기에 사용가능하다. -->
 						<c:if test="${selectedReviews !=null}">
 							<c:choose>
 								<c:when test="${selectedReviews > 200 }">

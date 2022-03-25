@@ -36,7 +36,7 @@ import proj21_admin.service.admin.product.AdminProductService;
 @Controller
 @RequestMapping("/admin/product/")
 public class AdminProductController {
-	private static final String CURR_IMAGE_REPO_PATH = "D:\\admin\\file_repo";
+	private static final String CURR_IMAGE_REPO_PATH = "C:\\admin\\file_repo";
 	private final CustomCollectionValidator customCollectionValidator = new CustomCollectionValidator();
 	
 	// 1. 사용할 Service 자동 get, set 생성
@@ -129,18 +129,20 @@ public class AdminProductController {
 		Map<String, Object> newProductMap1 = new HashMap<String, Object>();
 		Map<String, Object> newProductMap2 = new HashMap<String, Object>();
 		
-		String message = null;
+		
 		String proNameCheck=multipartRequest.getParameter("proName").trim();
 		String proPriceCheck=multipartRequest.getParameter("proPrice").trim();
 		String proSalesrateCheck=multipartRequest.getParameter("proSalesrate").trim();
 		String proQuantityCheck=multipartRequest.getParameter("proQuantity").trim();
 		String proContentCheck=multipartRequest.getParameter("proContent").trim();
 		String proNumCheck=multipartRequest.getParameter("proNum").trim();
-		
+		// ResponseEntity 사용법1.
+		String message = null;
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		
+		// ResponseEntity 사용법2.
 		if(proNameCheck.isEmpty() || proPriceCheck.isEmpty() ||proSalesrateCheck.isEmpty() ||proQuantityCheck.isEmpty() ||proContentCheck.isEmpty() ||proNumCheck.isEmpty() ) {
 			message = "<script> ";
 			message += " alert('빈칸이 존재합니다. 확인해 주세요.');";

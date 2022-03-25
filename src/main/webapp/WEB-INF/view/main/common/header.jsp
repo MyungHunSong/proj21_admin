@@ -11,7 +11,6 @@
 
 </head>
 <body>
-${authInfo.id }
 	<header id="header">
 			<div class="top">
 				<!-- https://icons8.com/icon/JWv_lqo5fs4F/shopaholic 로고 사용 -->
@@ -63,10 +62,17 @@ ${authInfo.id }
 				
 				<c:if test="${authInfo.id == 'admin' }">
 					<li>
-						<a href="${contextPath}/admin/order/orderStatics">관리자 페이지</a>
+						<a href="${contextPath}/admin/order/orderStatics">
+							<img src="${contextPath}/resources/admin/admin.png" style="width:24px; height: 24px; "/>
+						</a>
+						<ul id="menu_info"><li>관리자 페이지</li></ul>
 					</li>	
 				</c:if>	
 			</ul>
+			
+			<div id = "member_point">
+							
+			</div>
 		</div>										
 	</header>
 </body>

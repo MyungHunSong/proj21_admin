@@ -58,6 +58,7 @@ public class AdminReviewController {
 		pagingMap.put("memberId", memberId);
 		pagingMap.put("proNum", proNum);
 		
+		// AdminReviewService에서 가져와 선언된 reviewsMap에 담아줌
 		reviewsMap = adminReviewService.listReviews(pagingMap);
 		
 		reviewsMap.put("section", section);
@@ -65,8 +66,12 @@ public class AdminReviewController {
 		reviewsMap.put("memberId", memberId);
 		reviewsMap.put("proNum", proNum);
 		
+		// addObject를 사용함으로 jsp페이지 에서 받아 오기가능 
+		//(ServiceImpl에 담겨 있는 selectedReviews, selectAllReviews 도 사용가능)
+		// 단 거기서도 map.put("selectedReviews", selectedReviews) 되어 있을시
 		mav.addObject("reviewsMap", reviewsMap);
-		mav.setViewName("admin/review/listReviews");
+		mav.setViewName(""
+				+ "admin/review/listReviews");
 		return mav;
 	}
 	

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.coobird.thumbnailator.Thumbnails;
 @Controller
 public class FileDownloadController {
-	private static final String CURR_IMAGE_REPO_PATH="D:\\shop\\file_repo";
-	private static final String CURR_NOTICE_REVIEW_REPO_PATH="D:\\shop\\notice\\review";
-	private static final String CURR_NOTICE_QNA_REPO_PATH="D:\\shop\\notice\\qna";
+	private static final String CURR_IMAGE_REPO_PATH="C:\\shop\\file_repo";
+	private static final String CURR_NOTICE_REVIEW_REPO_PATH="C:\\shop\\notice\\review";
+	private static final String CURR_NOTICE_QNA_REPO_PATH="C:\\shop\\notice\\qna";
 	
 	@RequestMapping("/thumbnails")
 	private void thumbnails(

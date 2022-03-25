@@ -1,0 +1,13 @@
+@charset "UTF-8";
+.home-main-slider-container{
+	margin: 0px auto;
+	position: relative;
+	width: 2000px;
+	height: 800px;
+	
+
+}
+
+.homeMainSliderContainer{
+	display:inline-block;
+}
