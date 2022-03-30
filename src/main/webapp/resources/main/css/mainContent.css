@@ -1,13 +1,18 @@
 @charset "UTF-8";
-.home-main-slider-container{
+
+.parent .home-main-slider-container{
 	margin: 0px auto;
 	position: relative;
-	width: 2000px;
-	height: 800px;
-	
-
+	width: 3000px;
+	height: 1000px;
 }
 
 .homeMainSliderContainer{
 	display:inline-block;
+}
+
+.homeMainContentBottom{
+	display:flex;
+	align-items:center;
+	justify-content:center;
 }

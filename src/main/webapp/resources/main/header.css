@@ -3,21 +3,38 @@
 
 #header{
 	margin: auto;
-	min-width: 1440px;
-	max-width: 1900px;
+	min-width: 1800px;
+	max-width: 3000px;
 	border-bottom: #ccc solid 1px;
 }
 
 /* header영역 */
-#header .top{
-	display: felx;
-	height:130px;
+.top{
+	display: inline-flex;
+	width: 100%;
+	height:150px;
 	margin: 0 auto;
 	padding:0 50px;
 	position: relative;
 	background: #fff;
 }
 
+/*로고*/
+.top_log{
+	margin:auto;
+}
+
+/*제품 nav*/
+.top_product{
+	margin:auto;
+}
+
+/*로그인, 고객센터 등등 */
+.top_manual{
+	margin:auto;
+	padding-left: 50px;	
+}
+/* 로고 이름 */
 #header .top .top_name{
 	position: relative;
 	text-decoration: none;
@@ -27,7 +44,7 @@
 	font-weight: bold;
 }
 
-/* 상품 영역 */
+/* 상품 종류 */
 .bot-nav{
 	margin: 0 auto;
 	list-style: none;
@@ -40,14 +57,14 @@
 	display:table-cell;
 	min-width: inherit;
 	position: relative;
-	margin-right: 40px;
+	margin-right: 70px;
 	margin-left: 70px;
 }
 
 .bot-nav > li > a {
 	text-decoration: none;
 	font-weight: bold;
-	font-size: 15px;
+	font-size: 20px;
 	color: black;		
 }
 
@@ -55,7 +72,7 @@
 	color:red;
 }
 
-/*  로그인 영역 */
+/*  로그인 등 기타 */
 #header .top-nav{
 	float:right;
 	list-style: none;
