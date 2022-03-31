@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proj21_admin.mapper.product.ProductListMapper">
+	<resultMap type="ProductImageDTO" id="ResProductImg">
+		<!-- column="mysql 데이터 이름" property="java.DTO 객체 이름" -->
+		<id column="pro_img_code" property="proImgCode"/>
+		<result column="pro_imgfilename" property="proImgFileName"/>
+		<result column="pro_img_state" property="proImgState"/>
+		<result column="pro_num" property="proNum"/>
+	</resultMap>
+	
+	<!--resultMap type="맵핑할 DTO 이름 (java내에)" id="mybatis 에서 사용할 이름"  -->
+	<resultMap type="ProductDTO" id="ResProduct">
+		<id column="pro_num" property="proNum" />
+		<result column="pro_name" property="proName" />
+		<result column="pro_price" property="proPrice" />
+		<result column="pro_content" property="proContent" />
+		<result column="pro_salerate" property="proSalesrate" />
+		<result column="pro_cre_date" property="proCreDate" />
+		<result column="pro_status" property="proStatus" />
+		<result column="pro_color" property="proColor" />
+		<result column="pro_size" property="proSize" />
+		<result column="pro_quantity" property="proQuantity" />
+		<result column="pro_sold" property="proSold" />
+		<result column="pro_hits" property="proHits" />
+		<result column="re_replyCount" property="reReplyCount" />
+		<result column="pro_imagefilename" property="proImgfileName"/>
+	</resultMap>
+	
+	<!-- mybatis 내부에서 include 가능하게 만들기 -->
+	<sql id="selectProductJoinProductImageSQL">
+		select  p.pro_num,pro_category,pro_name,pro_price,pro_content,pro_salesrate
+		          ,pro_cre_date,pro_status,pro_color,pro_size,pro_quantity,pro_sold,pro_hits,re_replyCount
+		          ,pro_img_code,pro_imgfilename,pro_img_state
+          from  product p join pro_img i on p.pro_num = i.pro_num
+	</sql>
+	
+	<!-- 옷 상세정보 보기 -->
+	<select id="selectProductDetailByProNum" parameterType="int" resultMap="ResProduct">
+		<!-- include 사용법 -->
+		<include refid="selectProductJoinProductImageSQL"></include>
+		where p.pro_num like concat(#{param1}, '%');
+	</select>
+	
+	<!-- 옷 상세정보 입장시 조회수 증가 (+1) -->
+	<update id="updateProHits">
+		update product
+			set pro_hits = pro_hits + 1
+		where pro_num = #{param1};
+	</update>
+	
+	<!-- 제품 목록 페이징 -->
+	<select id="selectProductSale" parameterType="Map" resultMap="ResProduct">
+		SELECT DISTINCT a.*
+			from (select FORMAT(@ROWNUM := @ROWNUM + 1, 0) as rn,
+							  pro_num, pro_category, pro_name, pro_price, pro_salesrate, pro_cre_date,
+							  pro_status, pro_color, pro_size, pro_quantity, pro_hits, pro_imagefilename
+				      from ( select  @ROWNUM := 0 ) R, productall
+				  			   where  pro_size = 1
+				  			   
+			) a
+		where pro_size = 1
+	</select>
+</mapper> 

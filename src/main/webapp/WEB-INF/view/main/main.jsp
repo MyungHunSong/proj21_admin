@@ -36,7 +36,17 @@
 	}) 
  });
 </script>
-
+<!-- restfull 사용 -->
+<script>
+	$(function(){
+		var contextPath = "${contextPath}";
+		var proSize = ["XS", "S", "M", "L", "XL"];
+		var proStatus = ["RECOMMEND", "BEST", "SALE", "NEW"];
+		
+		/* 방법*/
+		
+	});
+</script>
 
 <!-- 반응형 웹으로 변환 -->
 <meta name="viewport"
@@ -63,10 +73,15 @@
 			<!-- 1. 슬라이더 섹션 부분(끝) -->
 
 			<!-- 2.바로가기 섹션 부분 -->
-
-			<div class="box2">
-				<p>2번째 블록</p>
-			</div>
+			<section>
+				<div class="homeMainContentTop">
+					<div class="homeMainContentTopRecmmend listRemocon">
+						<img class="imgBtn" src="#">
+					</div>
+				</div>
+			
+			</section>
+			
 			<!-- 2.바로가기 섹션 부분 -->
 		</div>
 	</section>
