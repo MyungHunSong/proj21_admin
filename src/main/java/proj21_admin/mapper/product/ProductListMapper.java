@@ -15,7 +15,7 @@ public interface ProductListMapper {
 	/*옷 리스트 -> 상세보기로 들어오는 순간 옷 조회수 증가 (+1)*/
 	int updateProHits(int proNum);
 	
-	/*메인화면 옷 목록*/
+	/*메인화면 제품 목록(new, reccomend, mostview, new, best, sale*/
 	List<ProductDTO> selectProductMain(Map<String, Object> condition);
 	
 	/*페이징*/

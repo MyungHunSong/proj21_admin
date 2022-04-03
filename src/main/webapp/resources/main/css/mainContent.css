@@ -1,18 +1,78 @@
 @charset "UTF-8";
 
-.parent .home-main-slider-container{
-	margin: 0px auto;
-	position: relative;
-	width: 3000px;
-	height: 1000px;
-}
-
+/*슬라이더 상위 박스*/
 .homeMainSliderContainer{
 	display:inline-block;
+	margin-left : 260px;
+	margin-bottom: 50px;
+	
 }
+
 
 .homeMainContentBottom{
 	display:flex;
 	align-items:center;
 	justify-content:center;
+}
+
+/*바로가기(recommend, mostview) 중앙 배치 */
+.homeMainContentTop{
+	display: flex;
+	align-items : center;
+	justify-content: center;
+}	
+/*바로가기 (new, best sale) 중앙배치 */
+.homeMainContentTop div{
+	font-size:30px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	height: 250px;
+	width: 600px;
+}
+
+/*바로가기(new, best, sale)글자 중앙 배치*/
+.homeMainContentBottom div{
+	font-size:40px;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	background : gray;
+	height: 250px;
+	width: 400px;
+}
+
+.listRemocon{
+	position:relative;
+	overflow:hidden;
+	margin:10px;
+	text-align: center;
+}
+#recommend{
+	text-align: center;	
+}
+
+/*버튼 이미지 꾸며주기*/
+.imgBtn{
+	width: 100%;
+	vertical-align: middle;
+}
+
+.imgBtnText{
+	color: #d35252;
+	position: absolute;
+	top:50%;
+	left:50%;
+	text-align: center;
+}
+
+body{
+	margin:0;
+	padding:0;
+	background-color: white;
+	height: 100%;
+}
+
+.center h3{
+	text-align: center;
 }

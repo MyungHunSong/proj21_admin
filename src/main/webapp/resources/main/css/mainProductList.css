@@ -1,1 +1,103 @@
 @charset "UTF-8";
+
+/*recommend, new등 꾸며주기*/
+.productList{
+	margin: 0 auto;
+    display: block;
+    width: 1280px;
+}
+
+.productList a{
+	text-decoration: none;	
+	color: #222;
+}
+
+
+.item{
+	border-radius: 10px;
+	margin-top: 100px;
+	background-color: #F2F2F2;
+	display: inline-block;
+}
+
+.item:hover{
+	background-color: white;	
+}
+
+.item img{
+	transition: 0.1s;
+	width: 270px;
+	height: 300px;
+	padding: 20px;
+}
+
+/* title */
+
+.title{
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 10px;
+}
+
+/* info */
+/* size */
+
+.info .size{
+	margin-bottom: 10px;
+}
+
+.info .size label{
+	display: block;
+}
+
+.info .size span{
+	font-size: 12px;
+	background-color: #fff;
+	color: #000;
+	margin-right: 5px;
+	display:inline-flex;
+	justify-content:center;
+	align-items:center;
+	line-height:5px;
+	width: 15px;
+	height: 15px;
+	border-radius: 3px;
+	padding: 2px;
+	cursor: pointer;
+}
+
+.info .size span.active,
+.info .size span:hover{
+	color: #fff;
+	background-color:#000; 
+}
+
+.add-cart{
+	border: 1px solid #fff;
+	width: 100%;
+	padding: 7px;
+
+	cursor: pointer;
+	margin-top:10px;
+	background-color: #000;
+	color: #fff;
+}
+
+.add-cart:hover{
+	background-color: #fff;
+	color: #000
+}
+
+
+.proName{
+	font-weight: 900;
+	font-size:20px;
+}
+
+#homeMainSection{
+	cursor: pointer;
+	margin-bottom: 300px;
+}
+
+.title{
+	font-size: 50px;
+}

@@ -13,8 +13,16 @@ where pro_num = 1;
 -- 메인화면 제품 목록(new, recommend,mostivew, new, best, sale)
 select *
 	from productall
-where pro_size = 2
-order by pro_price desc
+	where pro_size = 2
+	order by pro_price desc
 limit 8;
 
 -- 페이징 세일하는 제품 목록
+SELECT DISTINCT a.*
+	from (select format(@ROWNUM := @ROWNUM + 1, 0) as rn,
+	 pro_num, pro_category, pro_name, pro_price, pro_salerate, pro_cre_date,
+							  pro_status, pro_color, pro_size, pro_quantity, pro_hits, pro_imgfilename
+		from (select @ROWNUM := 0) R, productall
+		where pro_size = 1
+	) a
+where pro_size = 1;
