@@ -33,7 +33,7 @@ public class ProductServiceController {
 	}
 	
 	/*메인화면에서 여러조건(new, sale, recommend, best)으로 옷목록*/
-	@GetMapping("/selectProductMain/{proStatus}")
+	@GetMapping("/selectProductsMain/{proStatus}")
 	public ResponseEntity<Object> selectProductMain(@PathVariable String proStatus){
 		Map<String, Object> condition = new HashMap();
 		condition.put("proStatus", proStatus);		
@@ -56,13 +56,13 @@ public class ProductServiceController {
 	}
 	
 	/*페이징 : 총 검색 결과 수 구하기*/
-	@GetMapping("/selectCountByProductSale/{priceRange}/search")
+	@GetMapping("/selectCountByProductSale/{priceRange}/{search}")
 	public ResponseEntity<Object> countProductList(@PathVariable int priceRange, @PathVariable String search ){
 		HashMap<String, Object> condition = new HashMap<String, Object>();
 		
 		condition.put("search", search);
 		condition.put("priceRange", priceRange);
 		
-		return ResponseEntity.ok(service.selectCountByProductSale(null));
+		return ResponseEntity.ok(service.selectCountByProductSale(condition));
 	}
 }

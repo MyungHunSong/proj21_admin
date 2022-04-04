@@ -20,3 +20,4 @@ where re_num > 0
 delete 
 	from review 
 where re_num in();
+
