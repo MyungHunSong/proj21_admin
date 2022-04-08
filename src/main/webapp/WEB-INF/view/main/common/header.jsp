@@ -22,12 +22,13 @@
 			</div>
 			<div class="top_product">
 				<ul class="bot-nav">
-					<li><a href="#">반팔</a></li>
-					<li><a href="#">긴팔</a></li>
-					<li><a href="#">슬립스리스</a></li>
-					<li><a href="#">후드</a></li>
-					<li><a href="#">셔츠</a></li>
-					<li><a href="#">스웨터</a></li>
+					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">반팔</a></li>
+					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">긴팔</a></li>
+					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">슬립리스</a></li>
+					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">후드</a></li>
+					<li><a href="product/productlist?proCategory=5&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">셔츠</a></li>
+					<li><a href="product/productlist?proCategory=6&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">스웨트 셔츠</a></li>
+					<li><a href="product/productlist?proCategory=0&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">세일</a></li>
 				</ul>
 			</div>
 

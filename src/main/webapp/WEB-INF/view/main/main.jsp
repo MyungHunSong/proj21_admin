@@ -211,8 +211,15 @@ $(function(){
 	});
 	
 	/* 메인화면 (RECOMMEND,SALE,NEW,BEST) 클릭시 해당 목록으로 이동*/
-	$('.listRemocon').on('click',function(){
+	
+})
+
+$(function(){
+	
+$('.listRemocon').on('click',function(){
 		var listRemocon = $(this).text();
+		console.log(listRemocon);
+		
 		if(listRemocon == "RECOMMEND"){
 			$('html, body').animate({scrollTop:$('#recommend').position().top}, 'slow');
 		}
@@ -226,8 +233,7 @@ $(function(){
 			$('html, body').animate({scrollTop:$('#best').position().top}, 'slow');
 		}
 	})
-})	
-	
+});	
 </script>
 
 <!-- 반응형 웹으로 변환 -->

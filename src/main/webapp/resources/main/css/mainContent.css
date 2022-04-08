@@ -3,8 +3,10 @@
 /*슬라이더 상위 박스*/
 .homeMainSliderContainer{
 	display:inline-block;
-	margin-left : 260px;
+	margin-left : 250px;
 	margin-bottom: 50px;
+	min-width: 1800px;
+	max-width: 2000px;
 	
 }
 
@@ -18,6 +20,7 @@
 /*바로가기(recommend, mostview) 중앙 배치 */
 .homeMainContentTop{
 	display: flex;
+	margin:auto;
 	align-items : center;
 	justify-content: center;
 }	
