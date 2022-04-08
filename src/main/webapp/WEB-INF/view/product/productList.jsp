@@ -9,9 +9,9 @@
 <meta charset="UTF-8">
 <title>옷 목록 페이지</title>
 <link rel="stylesheet"
-	href="${contextPath}/resources/product/css/productlist.css">
+	href="${contextPath}/resources/product/css/productList.css">
 <link rel="stylesheet"
-	href="${contextPath }/resources/main/css/main.css">
+	href="${contextPath }/resources/main/main.css">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
 	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
@@ -21,18 +21,17 @@
 <script type="text/javascript">
 <!-- 홈페이지 카테고리 영역 -->
 $(function(){
-	 
-	$(".size span .color span").on({
+	$(".size span, .color span").on({
 		"click" : clickFnc
 	})
 	
-	$(".like").click(function(){
+	$(".like").click(function() {
 		$(".like").toggleClass("active");
-	});
+	})
 	
-	function clickFnc(){
-		$(this).addClass()
-		$(this).siblings().removeClass("active")
+	function clickFnc() {
+		$(this).addClass("active");
+		$(this).siblings().removeClass("active");
 	}
 	
 	var contextPath = "${contextPath}";
@@ -42,151 +41,162 @@ $(function(){
 	var pageNum = ${pageNum};
 	var section = ${section};
 	var search = "${search}";
-	var proSize = ["XS", "S", "M", "L", "XL"];
+	var proSize = ["XS","S","M","L","XL"]
 	
 	/*검색(proCategory,priceRange,orderKind,search) 및 페이징(section,pageNum)을 위한 조건들을 넣은 제품목록 검색문*/
-	$.get(contextPath + "/api/selectProductsSale"+proCategory+"/" + section + "/" + pageNum +"/" + priceRange + "/" + orderKind + "/" + search + "/",
+	<!-- Controller 영역 : proj21_shop.controller.product/ProductServiceController 의 /selectProductsSale/{proCategory}/{section}/{pageNum}/{priceRange}/{orderKind}/{search} 맵핑 -->
+	<!-- main.jsp의 영역과 똑같은 방식으로 적용 -->
+	$.get(contextPath + "/api/selectProductsSale/"+proCategory+"/"+section+"/"+pageNum+"/"+priceRange+"/"+orderKind+"/"+search,
 	function(json){
-	
+		
 		var dataLength = json.length;
 		if(dataLength >= 1){
 			var sCont = "";
 			for(i = 0; i < dataLength; i++){
-			var proNum = json[i].proNum + "";
-			
-			sCont += "<div class='item'>";
-			sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
-			sCont += "			<div class='detail'>"
-			sCont += "				<div class='title'>"
-			sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
-			sCont +="					<span class='price'>"+ json[i].proPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") +"원</span>"       
-			sCont +="				</div>"
-			sCont +="				<div class='info'>"
-			sCont +="					<div class='size'>"
-	        sCont +="						<label>Sizes</label>"
-	        for(j = 0;j < proSize.length;j++){
-	        	sCont +="						<span class ='prodSize prodSize"+j+"'>"+proSize[j]+"</span>"	
-	        }
-	        sCont +="					</div>"
-	        sCont +="				</div>"
-	        sCont +="			</div>"
-	        sCont +="		<button class='add-cart'>Add to Cart</button>"
-	        sCont +="</div>"
+				var proNum =json[i].proNum+""
+				sCont += "<div class='item'>";
+				sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
+				sCont += "			<div class='detail'>"
+				sCont += "				<div class='title'>"
+				sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
+				sCont +="					<span class='price'>"+ json[i].proPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") +"원</span>"       
+				sCont +="				</div>"
+				sCont +="				<div class='info'>"
+				sCont +="					<div class='size'>"
+		        sCont +="						<label>Sizes</label>"
+		        for(j = 0;j < proSize.length;j++){
+		        	sCont +="						<span class ='prodSize prodSize"+j+"'>"+proSize[j]+"</span>"	
+		        }
+		        sCont +="					</div>"
+		        sCont +="				</div>"
+		        sCont +="			</div>"
+		        sCont +="		<button class='add-cart'>Add to Cart</button>"
+		        sCont +="</div>"
 			}
 			$(".productList").append(sCont);
+			
 		}
+		$('.add-cart').on('click',function(){
+			var uri = $(this).prev().prev().children().attr("href")
+			var proNum = uri.substring(uri.length,uri.length-3)
+			console.log(proNum)
+			openPop(proNum)
+		})
+		
+		function openPop(proNum){
+			var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=1070px, height=600px');
+		}
+		
 	});
-	
-	/* Filter안 조건 클릭 이벤트*/
-	$('.orderKind').on('click', 'li', function(){
-		// 사용할 변수 가져오기
+	// 여기서 data-order로 mybatis와 mapping 가능하다.
+	/*Filter안의 조건들을 클릭하는 이벤트*/
+	$('.orderKind').on('click', 'li',function(){
 		var contextPath = "${contextPath}";
-		var sortOrder = $(this).data("order");
-		var sortPrice = $(this).data("price");
+		var sortOrder = $(this).data("order")
+		var sortPrice = $(this).data("price")
+		console.log("here is data-order : ",$(this).data('order'))
+		console.log("here is data-price : ",$(this).data('price'))
 		var proCategory = ${proCategory};
 		
-		$(".productList").remove();
-		
-		if(sortPrice == undefinded){
+		$(".productList *").remove(); 
+		if(sortPrice == undefined){
 			sortPrice = 0;
 			$.get(contextPath + "/api/selectProductsSale/"+proCategory+"/"+section+"/"+pageNum+"/"+sortPrice+"/"+sortOrder+"/"+search,
-				function(json){
-				
-				var sCont = "";
-				var dataLength = json.length;
-				if(dataLength >= 1){
-					for(i = 0; i <dataLength; i++){
-						var proNum = json[i].proNum + "";
-						sCont += "<div class='item'>";
-						sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
-						sCont += "			<div class='detail'>"
-						sCont += "				<div class='title'>"
-						sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
-						sCont +="					<span class='price'>"+ json[i].proPrice +"</span>"       
-						sCont +="				</div>"
-						sCont +="				<div class='info'>"
-						sCont +="					<div class='size'>"
-				        sCont +="						<label>Sizes</label>"
-				        for(j = 0;j < proSize.length;j++){
-				        	sCont +="						<span class ='prodSize'>"+proSize[j]+"</span>"	
-				        }
-				        sCont +="					</div>"
-				        sCont +="				</div>"
-				        sCont +="			</div>"
-				        sCont +="		<button class='add-cart'>Add to Cart</button>"
-				        sCont +="</div>"	
-					}
-					$(".productList").append(sCont);
-				}
-				$('.add-cart').on('click',function(){
-					var uri = $(this).prev().prev().children().attr("href")
-					var proNum = uri.substring(uri.length,uri.length-3)
-					console.log(proNum)
-					openPop(proNum)
-				})
-				
-				function openPop(proNum){
-					var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=1070px, height=600px');
-				}
-			});
-			
+					function(json){
+						var sCont = "";
+						console.log(json)
+						var dataLength = json.length;
+						if(dataLength >= 1){
+							for(i = 0; i < dataLength; i++){
+								var proNum =json[i].proNum+"" 
+								sCont += "<div class='item'>";
+								sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
+								sCont += "			<div class='detail'>"
+								sCont += "				<div class='title'>"
+								sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
+								sCont +="					<span class='price'>"+ json[i].proPrice +"</span>"       
+								sCont +="				</div>"
+								sCont +="				<div class='info'>"
+								sCont +="					<div class='size'>"
+						        sCont +="						<label>Sizes</label>"
+						        for(j = 0;j < proSize.length;j++){
+						        	sCont +="						<span class ='prodSize'>"+proSize[j]+"</span>"	
+						        }
+						        sCont +="					</div>"
+						        sCont +="				</div>"
+						        sCont +="			</div>"
+						        sCont +="		<button class='add-cart'>Add to Cart</button>"
+						        sCont +="</div>"
+							}
+							$(".productList").append(sCont);
+						}
+						$('.add-cart').on('click',function(){
+							var uri = $(this).prev().prev().children().attr("href")
+							var proNum = uri.substring(uri.length,uri.length-3)
+							console.log(proNum)
+							openPop(proNum)
+						})
+						
+						function openPop(proNum){
+							var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=1070px, height=600px');
+						}
+					})
 		}else{
 			$.get(contextPath + "/api/selectProductsSale/"+proCategory+"/"+section+"/"+pageNum+"/"+sortPrice+"/"+sortOrder+"/"+search,
-			function(json){
-				console.log(json)
-				var dataLength = json.length;
-				var sCont = "";
-				if(dataLength >= 1){
-					for(i = 0; i < dataLength; i++){
-						var proNum =json[i].proNum+"" 
-						sCont += "<div class='item'>";
-						sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
-						sCont += "			<div class='detail'>"
-						sCont += "				<div class='title'>"
-						sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
-						sCont +="					<span class='price'>"+ json[i].proPrice +"</span>"       
-						sCont +="				</div>"
-						sCont +="				<div class='info'>"
-						sCont +="					<div class='size'>"
-				        sCont +="						<label>Sizes</label>"
-				        for(j = 0;j < proSize.length;j++){
-				        	sCont +="						<span class ='prodSize'>"+proSize[j]+"</span>"	
-				        }
-				        sCont +="					</div>"
-				        sCont +="				</div>"
-				        sCont +="			</div>"
-				        sCont +="		<button class='add-cart'>Add to Cart</button>"
-				        sCont +="</div>"
-					}
-					$(".productList").append(sCont);
-					
-					$('.add-cart').on('click',function(){
-						var uri = $(this).prev().prev().children().attr("href")
-						var proNum = uri.substring(uri.length,uri.length-3)
-						console.log(proNum)
-						openPop(proNum)
-					});
-					
-					function openPop(proNum){
-						var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=1070px, height=600px');
-					}
-			
-		}else{
-			sCont += "<div class='searchBlank'> 검색 결과<br> 없습니다. </div>"	
-			$(".productList").append(sCont);
-			
-			}
-		});
-		}		
-		/*세일인 경우에만 페이징을 사용하기 위해 주소에 있는 값을 변경시킴*/
+					function(json){
+						console.log(json)
+						var dataLength = json.length;
+						var sCont = "";
+						if(dataLength >= 1){
+							for(i = 0; i < dataLength; i++){
+								var proNum =json[i].proNum+"" 
+								sCont += "<div class='item'>";
+								sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
+								sCont += "			<div class='detail'>"
+								sCont += "				<div class='title'>"
+								sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
+								sCont +="					<span class='price'>"+ json[i].proPrice +"</span>"       
+								sCont +="				</div>"
+								sCont +="				<div class='info'>"
+								sCont +="					<div class='size'>"
+						        sCont +="						<label>Sizes</label>"
+						        for(j = 0;j < proSize.length;j++){
+						        	sCont +="						<span class ='prodSize'>"+proSize[j]+"</span>"	
+						        }
+						        sCont +="					</div>"
+						        sCont +="				</div>"
+						        sCont +="			</div>"
+						        sCont +="		<button class='add-cart'>Add to Cart</button>"
+						        sCont +="</div>"
+							}
+							$(".productList").append(sCont);
+							$('.add-cart').on('click',function(){
+								var uri = $(this).prev().prev().children().attr("href")
+								var proNum = uri.substring(uri.length,uri.length-3)
+								console.log(proNum)
+								openPop(proNum)
+							})
+							
+							function openPop(proNum){
+								var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=1070px, height=600px');
+							}
+						}else{
+							sCont +="<div class = 'searchBlank'>검색 결과<br> 없습니다.</div>"
+							$(".productList").append(sCont);
+						}
+						
+					})	
+		}
+		/*세일인 경우에만 페이징을 사용하기 위해
+		   주소에 있는 값들을 사용하기 위해 페이지를 변경시켰다.
+		*/
 		if(proCategory == 0){
 			window.location.href = contextPath + "/productlist?proCategory=0&section=1&pageNum=1&priceRange="+sortPrice+"&orderKind="+sortOrder+"&search="+search;	
 		}
 		
-	});
+	})
 	
-	$('.prodSearchBtn span').on('click', function(){
-		
+	$('.prodSearchBtn span').on('click',function(){
 		if($(this).text() == 'Filter'){
 			$('.prodSearchCondition').addClass('active')
 			$('.searchPlace').removeClass('active')
@@ -195,11 +205,98 @@ $(function(){
 			$('.prodSearchCondition').removeClass('active')
 			$('.searchPlace').addClass('active')
 		}
-	});
+	})
 	
+	$('.fa-search').on('click',function(){
+			$(".productList *").remove(); 
+			var sCont = "";
+			var search = $(this).prev().val()
+			if(search != ''){
+				$.get(contextPath + "/api/selectProductsSale/"+proCategory+"/"+section+"/"+pageNum+"/"+priceRange+"/"+orderKind+"/"+search,
+					function(json){
+						console.log(json)
+						var dataLength = json.length;
+						
+						if(dataLength >= 1){
+							for(i = 0; i < dataLength; i++){
+								var proNum =json[i].proNum+"" 
+								sCont += "<div class='item'>";
+								sCont += "			<div><a href='productDetail?proNum=" + proNum.substring(0,3) + "'><img src="+  contextPath+"/thumbnails?proNum="+proNum.substring(0,3)+"3&fileName="+json[i].proImgfileName+"></a></div>";
+								sCont += "			<div class='detail'>"
+								sCont += "				<div class='title'>"
+								sCont += "					<span class='proName'>"+ json[i].proName +"</span><br>"
+								sCont +="					<span class='price'>"+ json[i].proPrice +"</span>"       
+								sCont +="				</div>"
+								sCont +="				<div class='info'>"
+								sCont +="					<div class='size'>"
+						        sCont +="						<label>Sizes</label>"
+						        for(j = 0;j < proSize.length;j++){
+						        	sCont +="						<span class ='prodSize'>"+proSize[j]+"</span>"	
+						        }
+						        sCont +="					</div>"
+						        sCont +="				</div>"
+						        sCont +="			</div>"
+						        sCont +="		<button class='add-cart'>Add to Cart</button>"
+						        sCont +="</div>"
+							}
+						}else if(dataLength == 0 | search == ''){
+							sCont +="<div class = 'searchBlank'>검색 결과<br> 없습니다.</div>"
+						}
+						$(".productList").append(sCont);
+						$('.add-cart').on('click',function(){
+							var uri = $(this).prev().prev().children().attr("href")
+							var proNum = uri.substring(uri.length,uri.length-3)
+							console.log(proNum)
+							openPop(proNum)
+						})
+						
+						function openPop(proNum){
+							var popup = window.open("productDetailItem2?proNum="+proNum,'상품상세정보','width=800px, height=700px');
+						}
+				})
+				
+				/*세일인 경우에만 페이징을 사용하기 위해*/
+				if(proCategory == 0){
+					window.location.href = contextPath + "/productlist?proCategory=0&section=1&pageNum=1&priceRange="+priceRange+"&orderKind="+orderKind+"&search="+search;	
+				}
+		    	
+			}
+			
+	}) 
+	<!-- Controller 경로 : proj21_shop.controller.product/ProductServiceController 의 /selectCountByProductSale/{priceRange}/{search} -->
+	function totalCount(){
+		$.get(contextPath + "/api/selectCountByProductSale/"+${priceRange}+"/"+search,function(json){
+			console.log(json)
+			var page = Math.ceil(json/8)
+			console.log(page)
+			var sCont = "";
+			for(i = 1; i < page+1; i++){
+				if(pageNum == i){
+					sCont += "<a class = 'pBtn' style='color: red; font-size : 20px;'>  "+i+"  </a>"
+				}else	{
+					sCont += "<a class = 'pBtn'>  "+i+"  </a>"	
+				}	
+			}
+			$('#pageBtn').append(sCont)
+			
+			$('.pBtn').on('click',function(){
+				url = contextPath+"/productlist?proCategory=0&section=1&pageNum="+$(this).text().trim()+"&priceRange= ${priceRange}&orderKind=${orderKind}&search="+search	
+				
+				$(this).attr("href",url)
+				console.log(url)
+			})
+			if(json == 0){
+				sCont +="<div class = 'searchBlank'>검색 결과<br> 없습니다.</div>"
+				$(".productList").append(sCont);
+			}
+		})
+	}
+
+	if(proCategory == 0){
+		totalCount()
+	}
 	
-/*main function end*/	
-});
+})
 
 </script>
 

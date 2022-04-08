@@ -22,13 +22,13 @@
 			</div>
 			<div class="top_product">
 				<ul class="bot-nav">
-					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">반팔</a></li>
-					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">긴팔</a></li>
-					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">슬립리스</a></li>
-					<li><a href="product/productlist?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">후드</a></li>
-					<li><a href="product/productlist?proCategory=5&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">셔츠</a></li>
-					<li><a href="product/productlist?proCategory=6&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">스웨트 셔츠</a></li>
-					<li><a href="product/productlist?proCategory=0&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">세일</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=1&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">반팔</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=2&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">긴팔</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=3&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">슬립리스</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=4&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">후드</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=5&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">셔츠</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=6&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">스웨트 셔츠</a></li>
+					<li><a href="${contextPath}/product/productList?proCategory=0&section=1&pageNum=1&priceRange=0&orderKind=asc&search=null">세일</a></li>
 				</ul>
 			</div>
 
@@ -56,7 +56,7 @@
 					</c:if>
 
 					<c:if test="${empty authInfo}">
-						<li><a href="login"><img
+						<li><a href="${contextPath}/login"><img
 								src="https://img.icons8.com/ios-glyphs/30/000000/login-rounded-right--v1.png" /></a>
 							<ul id="menu_info">
 								<li>로그인</li>

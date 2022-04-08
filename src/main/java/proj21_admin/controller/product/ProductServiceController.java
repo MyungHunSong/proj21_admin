@@ -44,14 +44,29 @@ public class ProductServiceController {
 	/*세일인 옷은 페이징 까지 포함 ? 다른거는*/ 
 	/*제품목록화면에서 여러조건(orderKind,priceRange,proCategory)으로 옷목록 검색 및 페이징*/
 	@GetMapping("/selectProductsSale/{proCategory}/{section}/{pageNum}/{priceRange}/{orderKind}/{search}")
-	public ResponseEntity<Object> selectProductsList(@PathVariable Integer proCategory, @PathVariable Integer section, @PathVariable Integer pageNum,
-			@PathVariable Integer priceRange, @PathVariable String orderKind, @PathVariable String search){
-		HashMap<String, Object> saleProduct = new HashMap<String, Object>();
-		saleProduct.put("search", saleProduct);
+	public ResponseEntity<Object> selectProductsList(@PathVariable Integer proCategory,
+													@PathVariable Integer section,
+													@PathVariable Integer pageNum,
+													@PathVariable Integer priceRange,
+													@PathVariable String orderKind,
+													@PathVariable String search){
+		Map<String, Object> saleProduct = new HashMap<String, Object>();
+		saleProduct.put("search", search);
 		saleProduct.put("proCategory", proCategory);
+		saleProduct.put("section", section);
 		saleProduct.put("pageNum", pageNum);
 		saleProduct.put("priceRange", priceRange);
 		saleProduct.put("orderKind", orderKind);
+		
+		System.out.println("ProductServiceController.selectProductList 'key' => proCategory : " + proCategory);
+		System.out.println("ProductServiceController.selectProductList 'key' => section : "+  section);
+		System.out.println("ProductServiceController.selectProductList 'key' => pageNun : "+ pageNum);
+		System.out.println("ProductServiceController.selectProductList 'key' => priceRange : "+ priceRange);
+		System.out.println("ProductServiceController.selectProductList 'key' => orderKind : "+ orderKind);
+		System.out.println("ProductServiceController.selectProductList 'key' => search : " + search );
+		
+		System.out.println("ProductServiceController.selectProductList 'key' => saleProduct : " + saleProduct);
+		
 		return ResponseEntity.ok(service.selectProductSale(saleProduct));
 	}
 	

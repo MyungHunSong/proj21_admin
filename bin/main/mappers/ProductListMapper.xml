@@ -69,37 +69,36 @@
 	<!-- prefix = "" 는 if문 앞에 들어갈 문장에 원하는 문자열을 삽입해준다
 	ex) <trim prefix="set"> ("board", "corad") => set("board", "corad") 이런식 -->
 	<select id="selectProductSale" parameterType="Map" resultMap="ResProduct">
-		SELECT DISTINCT a.*
-			from (select format(@ROWNUM := @ROWNUM + 1, 0) as rn,
-			 pro_num, pro_category, pro_name, pro_price, pro_salerate, pro_cre_date,
-									  pro_status, pro_color, pro_size, pro_quantity, pro_hits, pro_imgfilename
-				from (select @ROWNUM := 0) R, productall
-				where pro_size = 1
-				<trim prefix="">
-					<if test="search.isEmpty"></if>
-					<if test="search != 'null' ">and pro_name like concat('%', #{search}, '%')</if>
-					<if test="proCategory == 0">and pro_salerate != 0</if>
-					<if test="proCategory > 0">and pro_category = #{proCategory}</if>
-				</trim>
-				<trim prefix="and pro_price between">
-					<if test="priceRange == 1">10000 and 30000</if>
-					<if test="priceRange == 2">30000 and 50000</if>
-					<if test="priceRange == 3">50000 and 80000</if>
-					<if test="priceRange == 4">80000 and 100000</if>
-				</trim>
-				<trim prefix="">
-					<if test="priceRange == 5"> 1and pro_price > 100000</if>
-				</trim>
-				<trim prefix="order by">
-					<if test="orderKind == 'asc'">pro_price * (100 - pro_salerate) asc</if>
-					<if test="orderKind == 'desc'">pro_price * (100-pro_salerate) desc</if>
-					<if test="orderKind == '신상'">'신상'</if>
-					<if test="orderKind == 'proHits'">pro_hits desc</if>
-				</trim>
-			) a
-		where pro_size = 1;
-		 and rn between (#{section.jdbcType=NUMERIC} - 1) * 80 +(#{pageNum, jdbcType=NUMERIC-1}) * 8 + 1
-		 and (#{section, jdbcType=NUMERIC - 1 ) * 80 +#{pageNum,jdbcType=NUMERIC} * 8
+		SELECT DISTINCT  a.*
+		  FROM  (select FORMAT(@ROWNUM := @ROWNUM + 1, 0) as rn,
+							  pro_num, pro_category, pro_name, pro_price, pro_salerate, pro_cre_date,
+							  pro_status, pro_color, pro_size, pro_quantity, pro_hits, pro_imgfilename
+				      from ( select  @ROWNUM := 0 ) R, productall
+				  			   where  pro_size = 1
+				  			   <trim prefix="">
+				  			   		<if test="search.isEmpty"></if>
+				  			   		<if test="search != 'null'">and pro_name like concat('%',#{search},'%')</if>
+				  			   		<if test="proCategory == 0"> and pro_salerate != 0</if>
+		 							<if test="proCategory > 0">and pro_category = #{proCategory}</if>
+		 					   </trim>
+				  			   <trim prefix="and pro_price between">
+						    	 	<if test="priceRange == 1">10000 and 30000</if>
+						    	 	<if test="priceRange == 2">30000 and 50000</if>
+						    	 	<if test="priceRange == 3">50000 and 80000</if>
+						    	 	<if test="priceRange == 4">80000 and 100000</if>
+						       </trim>
+						       <trim prefix="">
+						     		<if test="priceRange == 5">and pro_price > 100000</if>
+						       </trim>
+							   <trim prefix="order by">
+									<if test="orderKind == 'asc'">pro_price*(100-pro_salerate) asc</if>   
+									<if test="orderKind == 'desc'">pro_price*(100-pro_salerate) desc</if>   
+									<if test="orderKind == '신상'">'신상'</if>   
+									<if test="orderKind == 'proHits'">pro_hits desc</if>   
+						       </trim>) a
+				    where pro_size = 1
+	          				 AND rn BETWEEN (#{section,jdbcType=NUMERIC}-1) * 80 +(#{pageNum,jdbcType=NUMERIC}-1) * 8 + 1 
+	          				 AND (#{section,jdbcType=NUMERIC}-1) * 80 +#{pageNum,jdbcType=NUMERIC} * 8
 	</select>
 	
 	<!-- 제품 목록 세일 카운트 -->
