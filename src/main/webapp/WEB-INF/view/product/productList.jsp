@@ -35,12 +35,19 @@ $(function(){
 	}
 	
 	var contextPath = "${contextPath}";
+	console.log("contextPath = ", contextPath)
 	var proCategory = ${proCategory};
+	console.log("proCategory = ", proCategory)
 	var orderKind = "${orderKind}";
+	console.log("orderKind = ", orderKind)
 	var priceRange = ${priceRange};
+	console.log("priceRange = ", priceRange)
 	var pageNum = ${pageNum};
+	console.log("pageNum = ", pageNum)
 	var section = ${section};
+	console.log("section = ", section)
 	var search = "${search}";
+	console.log("search = ", search)
 	var proSize = ["XS","S","M","L","XL"]
 	
 	/*검색(proCategory,priceRange,orderKind,search) 및 페이징(section,pageNum)을 위한 조건들을 넣은 제품목록 검색문*/
@@ -88,7 +95,8 @@ $(function(){
 		}
 		
 	});
-	// 여기서 data-order로 mybatis와 mapping 가능하다.
+	// 여기서  view -> controller -> service -> DTO -> sql -> mybatis -> service -> controller -> view
+	// 과정중 view 데이터 일치 유무 <=> mybatis if data일치 유무가 맞다면 사용가능 
 	/*Filter안의 조건들을 클릭하는 이벤트*/
 	$('.orderKind').on('click', 'li',function(){
 		var contextPath = "${contextPath}";

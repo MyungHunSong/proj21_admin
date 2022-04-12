@@ -23,12 +23,13 @@ public class ProductServiceController {
 	private ProductListService service;
 	
 	/* 옷 상세보기 */
-	// main.jsp 의 $.get(proj21_shop/api/selectProductsMain/ + proStatus 영역)
+	/*productDetailItem1,2 용 (하나는 정규 페이지, 하나는 팝업용)*/
 	@GetMapping("/productDetail/{proNum}")
 	public ResponseEntity<Object> productDetail(@PathVariable int proNum){
 		service.updateProhits(Integer.parseInt(proNum + "1"));
 		List<ProductDTO> product = service.showProductDetailByProNum(proNum);
-		System.out.println("/productDetail/{proNum} 영역 >>>: " + product);		
+		System.out.println("[ProductserviceController]/productDetail/{proNum} 영역 >>>: " + product);
+		
 		return ResponseEntity.ok(product);
 	}
 	
@@ -51,6 +52,7 @@ public class ProductServiceController {
 													@PathVariable String orderKind,
 													@PathVariable String search){
 		Map<String, Object> saleProduct = new HashMap<String, Object>();
+		// 데이터 뿌리는 곳에서 데이터 저장을 해준다 MAP에다가
 		saleProduct.put("search", search);
 		saleProduct.put("proCategory", proCategory);
 		saleProduct.put("section", section);
@@ -80,4 +82,5 @@ public class ProductServiceController {
 		
 		return ResponseEntity.ok(service.selectCountByProductSale(condition));
 	}
+	
 }

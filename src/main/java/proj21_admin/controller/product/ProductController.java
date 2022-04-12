@@ -10,11 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/product/")
 public class ProductController {
 	
-	/*!RestFull controller는 일반적 페이지만 들어가는 용도다 data를 가져와 뿌려주는건 restfull에서 진행한다*/
+	/*일반 controller는 일반적 페이지만 들어가는 용도다 data를 가져와 뿌려주는건 restfull에서 진행한다*/
 	/*내가 사용할 매핑주소 : /productlist , view 위치와 이름 : product/productList */
-	/*@RequestParam proCategory,section,pageNum,priceRange,orderKind,search */
-	
-	
+	/*@RequestParam proCategory,section,pageNum,priceRange,orderKind,search */	
 	@GetMapping("productList")
 	public ModelAndView getProductListByPorCategory(
 			@RequestParam(value="proCategory") Integer proCategory,
@@ -30,9 +28,9 @@ public class ProductController {
 		//ModelAndView mav = new ModelAndView("/product/productList", "proCategory", proCategory);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/product/productList");
+		mav.setViewName("product/productList");
+		// restController 에서 put을 해줬기에 여기선 addObject로 view에서 사용해주자 알아서 가지고 온다.
 		mav.addObject("proCategory", proCategory);
-		
 		mav.addObject("section", section);
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("priceRange", priceRange);
@@ -41,5 +39,18 @@ public class ProductController {
 			
 		return mav;	
 	}
-	/*사용할 매핑주소 : /productlist, view 위취와 이름 : product/productlist */
+	/*productDetailItem 페이지 입장용 */
+	@GetMapping("productDetail")
+	public ModelAndView productDetailItem(@RequestParam(value = "proNum") Integer proNum) {
+		ModelAndView mav = new ModelAndView("product/productDetail","proNum", proNum);
+		return mav;
+	};
+	
+	/*productDetailItem2 페이지 입장용 (팝업창)*/
+	@GetMapping("productDetailItem2")
+	public ModelAndView productDetailItem2(@RequestParam(value = "proNum") Integer proNum) {
+		ModelAndView mav = new ModelAndView("product/productDetailItem2", "proNum", proNum);
+				
+		return mav;
+	};
 }

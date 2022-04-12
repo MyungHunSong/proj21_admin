@@ -1,4 +1,11 @@
 use proj21_admin;
+-- 제품
+-- 제품 번호 1옷 카테고리 = (1:반팔)(2:긴팔)(3:슬립리스)(4:후디)(5:셔츠)(6:맨투맨)
+-- 01 옷 색상       = 아래 참고 색상=번호 참고
+-- 1옷 사이즈    = (1:XS)(2:S)(3:M)(4:L)(5:XL)
+-- white = 1, ivory = 2, gray = 3, pink = 4, yellow =5, mint = 6
+-- green = 7, purple = 8, navy = 9, black = 11, brown = 12, orange = 13, blue = 14, red=15, basic=16
+
 
 -- 옷 상세정보 보기
 select  p.pro_num,pro_category,pro_name,pro_price,pro_content,pro_salerate
@@ -14,7 +21,7 @@ where pro_num = 1;
 select  pro_num,pro_category,pro_name,pro_price,pro_content,pro_salerate,pro_cre_date,pro_status,
 				pro_color,pro_size,pro_quantity,pro_sold,pro_hits,re_replyCount,pro_img_code,pro_imgfilename,pro_img_state
 			from productall
-		where pro_size = 1 and pro_status = "신상"		
+		where pro_size = 2 and pro_status = "신상"		
 	order by pro_price desc
 limit 8;
 
