@@ -10,8 +10,7 @@
 <title>옷 목록 페이지</title>
 <link rel="stylesheet"
 	href="${contextPath}/resources/product/css/productList.css">
-<link rel="stylesheet"
-	href="${contextPath }/resources/main/main.css">
+<link rel="stylesheet" href="${contextPath }/resources/main/main.css">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
 	integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
@@ -35,19 +34,14 @@ $(function(){
 	}
 	
 	var contextPath = "${contextPath}";
-	console.log("contextPath = ", contextPath)
-	var proCategory = ${proCategory};
-	console.log("proCategory = ", proCategory)
-	var orderKind = "${orderKind}";
-	console.log("orderKind = ", orderKind)
-	var priceRange = ${priceRange};
-	console.log("priceRange = ", priceRange)
-	var pageNum = ${pageNum};
-	console.log("pageNum = ", pageNum)
+	var proCategory = ${proCategory};	
+	var orderKind = "${orderKind}";	
+	var priceRange = ${priceRange};	
+	var pageNum = ${pageNum};	
 	var section = ${section};
-	console.log("section = ", section)
+	
 	var search = "${search}";
-	console.log("search = ", search)
+	
 	var proSize = ["XS","S","M","L","XL"]
 	
 	/*검색(proCategory,priceRange,orderKind,search) 및 페이징(section,pageNum)을 위한 조건들을 넣은 제품목록 검색문*/
@@ -212,6 +206,7 @@ $(function(){
 		}else if($(this).text() == 'Search'){
 			$('.prodSearchCondition').removeClass('active')
 			$('.searchPlace').addClass('active')
+			$('.productList > .item').removeClass('active')
 		}
 	})
 	

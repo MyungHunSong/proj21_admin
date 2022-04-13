@@ -4,6 +4,7 @@
 	margin: 0 auto;
     display: block;
     width: 1280px;
+    text-align: center;
 }
 
 .productList a{
@@ -133,6 +134,7 @@
 	font-size: 200px;
 	color: #ccc;
 	margin: auto;	
+	text-align: center;
 }
 
 .searchPlace{
