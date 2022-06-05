@@ -1,1 +1,170 @@
 @charset "UTF-8";
+#box{
+	text-align: center;
+}
+
+/*1.옷, 옷설명 정렬*/
+#ProductLoad{
+	display: flex;
+	align-items: initial;
+	justify-content: center;
+}
+
+.productImage img{
+	width:340px;
+	height:460px;
+}
+
+.productInfo{
+	margin_top:20px;
+	text-align: left;
+	margin-left: 100px;
+	font-size:20px;
+}
+
+.productInfo p {
+	font-size:15px;
+
+}
+
+.productInfo strong{
+	font-size: 40px;
+}
+
+.review{
+	margin-left: 20px;
+}
+
+/*가격 css*/
+.proSalerate{
+	font-weight: bold;
+	color: orange;
+}
+
+.proPrice{
+	color: #ccc;
+	text-decoration: line-through;
+}
+
+.proPriceSale{
+	font-weight: bold;
+}
+
+/*리뷰보기*/
+.review{
+	cursor:pointer;
+}
+
+.review:hover{
+	color: crimson;
+}
+
+/*사이즈*/
+.productInfo select{
+	padding:5px;
+	width:300px;
+	font-size: 13px;
+}
+
+/*장바구니 구매하기 버튼*/
+.submitBtns input{
+	width: 160px;
+	height: 50px;
+	font-size:20px;
+}
+
+#cart{
+	background-color: white;
+	color: black;
+}
+
+#purchase{
+	background-color: black;
+	color: white;
+}
+
+/*수량 올라가는 부분*/
+.btn{
+	cursor: pointer;
+}
+
+.calculator{
+	display:flex;
+	align-items: center;
+}
+
+.min, .max{
+	display:flex;
+	width:40px;
+	height: 40px;
+	justify-content: center;
+	align-items:  center;
+}
+
+.number{
+	width: 34px;
+	height: 35px;
+}
+
+.productRight{
+	display: flex;
+	margin-right: 360px;
+	flex-direction:column;
+	align-items:flex-end;
+}
+
+.cal{
+	margin-bottom: 20px;
+	display:flex;
+	justify-content: center;
+	align-items:center;
+	width: 40px;
+	height: 40px;
+}
+
+.calculator .btn{
+	background-color: white;
+	border: 1px solid #ccc;
+}
+
+/*모델 사진 및 사이즈 사진*/
+.detailImg{
+	margin-top: 150px;
+}
+
+/*후기*/
+.menuTitle{
+	margin-top:150px;
+	text-align: left;
+	font-size:50px;
+	color: #808080;
+}
+
+.noReview{
+	font-size:60px;
+	color:#ccc;
+	margin-bottom: 300px;
+}
+
+.reviewList{
+	text-align:left;
+}
+
+.proAndMemInfo{
+	float:left;
+}
+.proAndMemInfo span{
+	font-size:15px;
+	color: #bbb;
+}
+
+.memberId{
+	text-align:left;
+	color: #aaa;
+}
+.prodImg{
+	display: block;
+	float:left;
+	margin-right : 10px;
+	
+}

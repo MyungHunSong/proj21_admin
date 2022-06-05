@@ -7,17 +7,15 @@
 <html>
 <head>
 <!-- 사용할 jquery, script 기능들 -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" />
-<link rel="stylesheet" href="${contextPath }/resources/main/main.css">
-<link rel="stylesheet"
-	href="${contextPath }/resources/product/css/productDetail.css">
-<link rel="stylesheet"
-	href="${contextPath }/resources/product/css/star.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/main/main.css">
+<link rel="stylesheet" href="${contextPath}/resources/product/css/productDetail.css">
+<link rel="stylesheet" href="${contextPath}/resources/product/css/star.css" />
 
 <!-- ResponseEntity -> ajax를 사용하여 json데이터 테이블 구현 -->
 <script>
 /* 상단 1. ProductLoad 2. ProductRight에 적용될 데이터 + 박스 구현 */
-	$(function() {
+	$(function(){
 		/*숫자 증가 감소*/
 		var useNum = 0;
 		
@@ -44,19 +42,18 @@
 					intNum--
 					console.log(intNum)
 				}
-				$('.result').text(intNum)
+				$('#result').text(intNum)
 			});			
 		}
 		/*재고 수량에 맞춰 올라가는 함수 -end-*/
 		
 		count(useNum)
 		/* 사용할 데이터들 가져와 저장하기*/
-		var contextPath = "{contextPath}";
+		var contextPath = "${contextPath}";
 		var proNum = ${proNum};
-		var memberId = ${authInfo.id}
-		/*데이터 베이스 저장 숫자가 1 이라면 -> view에선 XS로 찍히게 (DB 설정에서 1부터 사이즈를 찍기로 해나서 (인덱스 번호는 0부터 시작이니))*/
-		var proSize = ["0", "XS", "S", "M", "L", "XL"];
-		var proColor ["0", "white", "ivory",]var proColor =["0","white", "ivory", "gray", "pink", "yellow", "mint", "green", "purple", "navy", "10", "black", "brown", "orange", "blue", "red", "basic"];
+		var memberId = "${authInfo.id}";
+		var proSize = ["0","XS","S","M","L","XL"];
+		var proColor =["0","white", "ivory", "gray", "pink", "yellow", "mint", "green", "purple", "navy", "10", "black", "brown", "orange", "blue", "red", "basic"];
 		var num = 0;
 		
 		/* 제품 번호를 배열로 받아와 제품 상세 검색 (배열로 받은 이유 : 재고량을 각각 표시하기 위해서)*/
@@ -111,6 +108,7 @@
 				
 				$("#ProductLoad").append(sCont);
 				var proNum = json[2].proNum + "";
+				var imgCont = "";
 				
 				for(j=1; j<3; j++){
 					imgCont += "<img class='detailImg' src="+ contextPath +"/resources/product/images/"+proNum+"-" + j +".jpg><br>"
@@ -121,14 +119,166 @@
 				$(".review").on('click', function(){
 					$('html, body').animate({scrollTop:$('#productReview').position().top}, 'slow');
 				});
-			}		
-		)
+			}); /*ProductLoad 영역 완료*/
+		
+			/* 장바구니 버튼*/
+			$("#cart").on("click",function(){
+				if($('#size').val() == "size01"){
+					return alert("사이즈를 선택해주세요")
+				}
+				
+				if(parseInt($('#result').text())==0){
+					return alert("수량을 선택해주세요");
+				}
+				
+				selectCartByMemberIdAndProNum(memberId, proNum)				
+			});
+			
+			/*장바구니 내에서 회원아이디, 제품 번호로 검색 있으면 update 없으면 insert (method)*/
+			function selectCartByMemberIdAndProNum(memberId, proNum){
+				var selectProNum = $.ajax({
+					url : contextPath + "/api/selectCartByIdAndProNum/" + memberId + "/" + parseInt(ProNum+$('#size').val()),
+					type:'get',
+					datatype: 'json',
+					cache : false,
+					success : function(res){
+						if(selectProNum.reponseJSON.length == 0){
+							insertCart();
+							window.close();
+							window.loaction.href=contextPath+"/cart?memId=${authInfo.id}";
+						}else if(selectProNum.reponseJSON.length == 1){
+							var cartNum = selectProNum.reponseJSON[0].cartNum
+							var cN = parseInt($('#result').text())
+							updateCart(cartNum, cN)
+							window.close()
+							window.location.hreff = contextPath + "/cart?memId=${authInfo.id}";
+						}
+					},
+					error : function(request, status, error){
+						alert("로그인창으로 이동하겠습니다.")
+						window.location.href = contextPath +  "/login"
+					}
+				})
+			}
+			/* 장바구니 추가 function*/
+			function insertCart(){
+				var newCart = {
+						"memberId" : {
+							"memberId" : memberId
+						},
+						"cartProNum" : {
+							"proNum" : parseInt(${proNum} + $('#size').val())
+						},
+						"cartProQuantity" : parseInt($('#result').text())
+				}
+				$.ajax({
+					url:contextPath + "/api/memberProductCart/",
+					type:"Post",
+					contentType : "application/json; charset=utf-8",
+					datatype : "json",
+					cache : false,
+					data : JSON.stringify(newCart),
+					success : function(res){
+						console.log(newCart)
+					},
+					error : function(request, status, error){
+						alert("장바구니에 등록 되었습니다.")
+						window.location.href=contextPath + "/login"
+					}
+					
+				})
+			}
+			
+			/* 장바구니 이미 있는 옷일때는 update(function)*/
+			function updateCart(cartNum, cN){
+				var = cartItem{
+					"cartNum" : cartNum,
+					"cartProQuantity" : cN	
+				}
+				$.ajax({
+					url : contextPath + "/api/memberProductCart/" + cartNum,
+					type : 'Patch',
+					contextType : "application/json; charset=utf-8",
+					datatype : "json",
+					data: JSON.stringify(cartItem),
+					success : function(cartItem){},
+					error:function(request, status, error){
+						alert("code:" + request.status+"\n" + "message:" 
+								+ request.reponseText + "\n" + "error:" + error);
+					}
+				})
+			}
+			
+			/* 구입하기 버튼 */
+			$('#purchase').on("click", function(){
+				if($('#size').val() == "size01"){
+					retrun alert("사이즈를 선택해주세요")
+				}
+				
+				if(parseInt($('#result').text())==0){
+					return alert("수량을 선택해주세요");
+				}
+				
+				if(!confirm("바로 구매하시겠습니까")){
+					
+				}else {
+					useOrderBtn()
+				}
+			});
+			
+			/*바로 구매하기 버튼을 사용해서 주문 페이질 넘어가기 위한 함수*/
+			function useOrderBtn(){
+				var orderProd = {
+						"cartProQuantity":parseInt($('#result').text()),
+						"memberId" : {
+							"memberId" : memberId
+						},
+						"cartProNum" : {
+							"proNum" : parseInt(${proNum} + $('#size').val())
+						}
+				}
+				$.ajax({
+					url:contextPath + '/api/useOrderProductBtn',
+					type:'Post',
+					contentType : "application/json; charset=utf-8",
+					datatype: "json",
+					data: JSON.stringify(orderProd),
+					success: function(res){
+						console.log(res)
+						selectOrderProduct(res);
+					},
+					error : function(request, status, error){
+						alert("로그인창으로 이동하겠습니다.")
+						window.location.href=contextPath + "/login"
+					}
+				})
+			}
+			
+			/*장바구니번호를 검색후 주문페이지로 이동*/
+			function selectOrderProduct(cartNums){
+				$.ajax({
+					url:contextPath + "/api/chooseProductCarts",
+					type:'Post',
+					contentType : "application/json; charset=utf-8",
+					datatype : "json",
+					data: JSON.strigify(cartNums),
+					success:function(res){
+						window.location.href = contextPath + "/order?memId=${authInfo.id}";
+					},
+					error:function(request, status, error){
+						alert("code:" + request.status + "\n" + "message:"
+								+request.responseText + "\n" + "error:" + error);
+					}
+				})
+			}
+		
 	})
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+<div id="box">
 	<!-- productDetailItem 영역 -->
 	<!-- 1. 박스 -->
 	<section id="ProductLoad"></section>
@@ -161,5 +311,6 @@
 		<p class="menuTitle">REVIEW</p>
 	</section>
 	<!-- 4. 박스 (끝) -->
+</div>	
 </body>
 </html>

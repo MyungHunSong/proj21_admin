@@ -22,7 +22,7 @@ public interface CartMapper {
 	int deleteCart(int cartNum);
 	
 	/*장바구니번호를 리스트로 받아 한번에 여러개 삭제*/
-	int deleteCart(List<Integer> list);
+	int deleteCarts(List<Integer> list);
 	
 	/*장바구니 수량 수정*/
 	int updateCart(CartDTO cart);

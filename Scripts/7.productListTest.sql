@@ -26,7 +26,7 @@ select  pro_num,pro_category,pro_name,pro_price,pro_content,pro_salerate,pro_cre
 limit 8;
 
 select count(*) from productall p 
-where pro_size = 1 and pro_status = '신상'
+	where pro_size = 1 and pro_status = '신상'
 order by pro_price desc;
 -- 페이징 세일하는 제품 목록
 SELECT DISTINCT a.*
