@@ -23,6 +23,7 @@
 		function count(useNum){
 			$('.btn').on('click', function(){
 				var status = $(this).val();
+				console.log("status : ", status)
 				/*[0부터 시작 <= 재고 수량만큼] 변수*/
 				/*id = result 밑의. text를 변수로 쓴다 (0이다)*/
 				var num = $('#result').text();
@@ -30,16 +31,20 @@
 				<!-- 수량 파악 -->
 				/*intNum = parseInt("0") -> 정수로 변환된다*/
 				var intNum = parseInt(num);
+				console.log("intNum : ", intNum)
 				var quantity = $("#size option:checked").text();
 				var colon = quantity.indexOf(':');
+				console.log(colon+2)
 				/*text 의 XS 남은 수량 : 10에서 substring을 사용하여 (:의 인덱스 번호 부터 나오는 숫자)*/
-				useNum = quantity.substring(colon)
+				useNum = quantity.substring(colon + 2)
+				console.log("useNum : ", useNum)
+				
 				
 				if(status == '+' && intNum < useNum){
-					intNum++
+					intNum++;
 					console.log(intNum)
 				}else if(status == '-' && intNum > 0){
-					intNum--
+					intNum--;
 					console.log(intNum)
 				}
 				$('#result').text(intNum)
@@ -56,20 +61,25 @@
 		var proColor =["0","white", "ivory", "gray", "pink", "yellow", "mint", "green", "purple", "navy", "10", "black", "brown", "orange", "blue", "red", "basic"];
 		var num = 0;
 		
+		/*스타일 후기 보기*/
+		var notice = ['별로에요', '보통이에요', '그냥 그래요', '맘에 들어요', '아주 좋아요'];
+			
 		/* 제품 번호를 배열로 받아와 제품 상세 검색 (배열로 받은 이유 : 재고량을 각각 표시하기 위해서)*/
 		$.get(contextPath + "/api/productDetail/" + proNum,
 			function(json){
 				console.log(json)
 				
 				var proSalerate = json[0].proSalesrate;
+				console.log("proSalerate -> ", proSalerate)
 				var proPrice = parseInt(json[0].proPrice);
+				console.log("proPrice -> ", proPrice)
 				/*세일 공식*/
-				var salePrice = ((100-proSalerate)/100) * proPrice;
+				var salePrice = proPrice * ((100-proSalerate)/100) 
 				
 				
 				/*가격을 정규식으로 찍어 내기위해 (###,###) 이런식*/
 				var temp = proPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-				var add = proSalerate.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+				var add = salePrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 				
 				/* 후기숫자 */
 				var reCount = 0;
@@ -96,7 +106,7 @@
 				sCont += "<p class='proPrice'>"+ temp + "원</p>";
 				sCont += "<span class='proSalerate'>"+ proSalerate +"% </span>";
 				sCont += "<span class='proPriceSale'>"+ add +"원 </span>";
-				sCont += "<p> <select id='size'> <option vale='size01'>사이즈를 선택해주세요</option>";
+				sCont += "<p> <select id='size'> <option value='size01'>사이즈를 선택해주세요</option>";
 				for(i = 1; i < json.length + 1; i++){
 					if(json[i-1].proQuantity == 0){
 						sCont += "<option value = "+ i + " style = 'color:red' >"+proSize[json[i-1].proSize] + "남은 수량: " + json[i-1].proQuantity+ "</option>";
@@ -123,6 +133,7 @@
 		
 			/* 장바구니 버튼*/
 			$("#cart").on("click",function(){
+				console.log($('#size').val())
 				if($('#size').val() == "size01"){
 					return alert("사이즈를 선택해주세요")
 				}
@@ -137,7 +148,7 @@
 			/*장바구니 내에서 회원아이디, 제품 번호로 검색 있으면 update 없으면 insert (method)*/
 			function selectCartByMemberIdAndProNum(memberId, proNum){
 				var selectProNum = $.ajax({
-					url : contextPath + "/api/selectCartByIdAndProNum/" + memberId + "/" + parseInt(ProNum+$('#size').val()),
+					url : contextPath + "/api/selectCartByIdAndProNum/" + memberId + "/" + parseInt(proNum+$('#size').val()),
 					type:'get',
 					datatype: 'json',
 					cache : false,
@@ -155,7 +166,7 @@
 						}
 					},
 					error : function(request, status, error){
-						alert("로그인창으로 이동하겠습니다.")
+						alert("로그인이 필요한 서비스입니다. 로그인 창으로 이동하겠습니다.")
 						window.location.href = contextPath +  "/login"
 					}
 				})
@@ -191,10 +202,10 @@
 			
 			/* 장바구니 이미 있는 옷일때는 update(function)*/
 			function updateCart(cartNum, cN){
-				var = cartItem{
-					"cartNum" : cartNum,
-					"cartProQuantity" : cN	
-				}
+				var cartItem = {
+						  "cartNum": cartNum,
+						  "cartProQuantity": cN
+						}
 				$.ajax({
 					url : contextPath + "/api/memberProductCart/" + cartNum,
 					type : 'Patch',
@@ -212,7 +223,7 @@
 			/* 구입하기 버튼 */
 			$('#purchase').on("click", function(){
 				if($('#size').val() == "size01"){
-					retrun alert("사이즈를 선택해주세요")
+					return alert("사이즈를 선택해주세요")
 				}
 				
 				if(parseInt($('#result').text())==0){
@@ -287,7 +298,7 @@
 	<!-- 2. 박스 -->
 	<div class="productRight">
 		<div class="calculator">
-			<input class="cal btn pls" type="button" value='-' />
+			<input class="cal btn plus" type="button" value='-' />
 			<div class="cal" id="result">0</div>
 			<input class="cal btn minus" type="button" value='+' />
 		</div>

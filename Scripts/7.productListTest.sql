@@ -62,3 +62,13 @@ update productall
 	set pro_status = '추천'
 where pro_size = 1 
 	and pro_num between 1141 and 2111;
+
+-- 일단 update를 통한 blackT status를 바꿔주자.
+update product
+	set pro_status = '신상'
+where pro_name like '%blackT%';
+
+select * from review;
+	
+
+
