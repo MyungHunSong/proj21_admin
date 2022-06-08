@@ -282,7 +282,23 @@
 					}
 				})
 			}
+			
+	/*제품별 후기 검색 (후기 controller -> DTO접근 -> mapper와 일치한 DB 데이터 접근 -> 데이터 가져와 Service에서 작업 -> 컨트롤러 -> 후기 View)*/
+	/* ResultFull을 사용한 View Jquery 기본형 $.get(데이터 주소, fucntion(json){View딴 데이터를 가진 front작업})*/
+	$.get(contextPath + "/api/selectReviewByProNum" + proNum,
+			function(json){
+			sCont = "";
 		
+			if(json.length != 0){
+				for(int i = 0; i < json.length; i++){
+					sCont += "<div class = 'reviewMembers'>";
+					sCont += 
+				}
+				
+			}
+		
+	});  /*제품별 후기 검색 -end- */
+	
 	})
 </script>
 <meta charset="UTF-8">
@@ -318,7 +334,7 @@
 	<!-- 3. 박스 (끝) -->
 	
 	<!-- 4. 박스 -->
-	<section>
+	<section id="productReview">
 		<p class="menuTitle">REVIEW</p>
 	</section>
 	<!-- 4. 박스 (끝) -->

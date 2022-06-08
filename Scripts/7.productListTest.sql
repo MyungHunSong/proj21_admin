@@ -70,5 +70,8 @@ where pro_name like '%blackT%';
 
 select * from review;
 	
-
+select r.re_num, p.pro_color,r.pro_num, r.re_member, r.re_content, r.re_image,re_image2,re_date,re_stars, p.pro_name, p.pro_imgfilename, p.pro_size,re_rep_num,re_rep_member,re_rep_content,re_rep_date
+		from review r join productall p on r.pro_num = p.pro_num left join re_reply rr on rr.re_num = r.re_num;
+	
+	where r.pro_num like concat(#{proNum}, '%');
 

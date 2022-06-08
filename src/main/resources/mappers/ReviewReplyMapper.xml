@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="proj21_admin.mapper.review.ReviewReplyMapper">
+<resultMap type="ReviewReplyDTO" id="ResReviewReply">
+	<id column="re_rep_num" property = "reRepNum"/>
+	<result column="re_num" property="reNum"/>
+	<result column="re_rep_member" property="reRepMember"/>
+	<result column="re_rep_Content" property="reRepContent"/>	
+</resultMap>
+
+<!-- 후기 하나에 댓글목록 -->
+<select id="selectReviewReply" resultMap="ResReviewReply">
+	select re_rep_num,re_num,re_rep_member,re_rep_content,re_rep_date
+  		  from re_reply
+		where re_num = #{reNum}
+		 order by re_rep_num
+</select>
+
+<!-- 댓글 추가 -->
+<insert id="insertReviewReply" parameterType="ReviewReplyDTO">
+	insert 
+		into re_reply
+		(re_num, re_rep_member, re_rep_content)
+	values (${reNum}, #{reRepMember}, #{reRepContent})
+</insert>
+<!-- 댓글 수정 -->
+<update id="updateReviewReply" parameterType="ReviewReplyDTO">
+		update re_reply 
+	         set re_rep_content = #{reRepContent}, re_rep_date = now() 
+	 	 where re_rep_num = #{reRepNum}
+</update>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReviewReply" parameterType="ReviewReplyDTO">
+	delete 
+		from re_reply
+	where re_rep_num = #{reRepNum}	
+</delete>
+
+<resultMap type="ReviewDTO" id="ResReview">
+		<id column="re_num" property="reviewNum"/>
+		<result column="pro_num" property="proNum"/>
+		<result column="re_member" property="memberId"/>
+		<result column="re_content" property="reviewContent"/>
+		<result column="re_image" property="reviewImagefilename1"/>
+		<result column="re_image2" property="reviewImagefilename2"/>
+		<result column="re_date" property="reviewDate"/>
+		<result column="re_stars" property="reviewStar"/>
+		<association property="proName" javaType="ProductDTO" autoMapping="true"/>
+		<association property="proImageFileName" javaType="ProductImageDTO" autoMapping="true"/>
+		<collection property="reviewReplys" resultMap="ResReviewReply"/>
+</resultMap>
+	
+	<!-- 제품별 후기 목록 -->
+<select id="selectReviewByProNum" resultMap="ResReview">
+	select r.re_num, p.pro_color,r.pro_num, r.re_member, r.re_content, r.re_image,re_image2,re_date,re_stars, p.pro_name, p.pro_imgfilename, p.pro_size,re_rep_num,re_rep_member,re_rep_content,re_rep_date
+		from review r join productall p on r.pro_num = p.pro_num
+		left join re_reply rr on rr.re_num = r.re_num
+	where r.pro_num like concat(#{proNum}, '%');	
+</select>
+
+<!-- 삭제나 수정하기전 회원 전아이디 비교 -->
+<select id="selectMemberIdAndReRepNum" resultMap = "ResReviewReply">
+	select re_rep_num,re_num,re_rep_member,re_rep_content,re_rep_date
+  		  from re_reply
+		where re_rep_member = #{reRepMember} and re_rep_num = #{reRepNum}
+</select>
+</mapper>
