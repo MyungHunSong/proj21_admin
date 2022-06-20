@@ -64,7 +64,7 @@
 					</c:if>
 
 					<c:if test="${!empty authInfo}">
-						<li><a href="logout"><img
+						<li><a href="${contextPath}/logout"><img
 								src="https://img.icons8.com/ios-filled/50/000000/logout-rounded-left.png"
 								style="width: 24px; height: 24px;" /></a>
 							<ul id="menu_info">

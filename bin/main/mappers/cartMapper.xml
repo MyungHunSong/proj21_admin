@@ -68,7 +68,7 @@
 		insert into cart
 			(cart_member_id, cart_pro_num, cart_pro_quantity)
 		values 
-			(#{memberId.memberId}, #{cartProNum.proNum}, #{cacrtProQuantity})	
+			(#{memberId.memberId}, #{cartProNum.proNum}, #{cartProQuantity})	
 	</insert>
 	
 	<!-- 카트에 삭제  -->
@@ -93,7 +93,7 @@
 	<!-- 카트 수정  -->
 	<update id="updateCart">
 		update cart
-			set cart_pro_qyantity = #{cartProQuantity}
+			set cart_pro_quantity = #{cartProQuantity}
 		where cart_num = #{cartNum}	
 	</update>
 </mapper>

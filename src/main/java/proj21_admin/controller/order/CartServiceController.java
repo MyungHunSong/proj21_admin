@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import proj21_admin.dto.cart.CartDTO;
 import proj21_admin.dto.member.MemberDTO;
+import proj21_admin.dto.product.ProductDTO;
 import proj21_admin.service.order.CartService;
 
 @RestController
@@ -79,6 +80,25 @@ public class CartServiceController {
 		cartDTO.setCartNum(cartNum);
 		
 		return ResponseEntity.ok(service.updateCart(cartDTO));
+	}
+	
+	/*장바구니 버튼 사용할 경우
+	 *장바구니 내에서 회원아이디, 제품 번호로 검색 있으면 update 없으면 insert를 하기위해 만든 검색문
+	 *장바구니에서 회원아이디로 검색 한 목록(로그인 안한경우 MemberNotLoginException 예외 생성)
+	 * */
+	@GetMapping("/selectCartByIdAndProNum/{memberId}/{proNum}")
+	public ResponseEntity<Object> selectCartByIdAndProNum(@PathVariable String memberId, @PathVariable int proNum){
+		MemberDTO member = new MemberDTO();
+		member.setMemberId(memberId);
+		
+		ProductDTO product = new ProductDTO();
+		product.setProNum(proNum);
+		
+		CartDTO cart = new CartDTO();
+		cart.setMemberId(member);
+		cart.setCartProNum(product);
+		
+		return ResponseEntity.ok(service.showCartsByMemberID(cart));	
 	}
 	
 	

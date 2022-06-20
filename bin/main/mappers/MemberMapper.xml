@@ -52,9 +52,14 @@
 			<include refid="selectSQL"></include>
 			<where>
 				<if test="memberId != null">
-					and m_id = #{memberId} and m_exit != 1 and m_passwd = #{memberPwd} and m_exit != 1;
+					and m_id = #{memberId} and m_exit != 1 and m_passwd = #{memberPwd};
 				</if>
 			</where>
+	</select>
+	
+	<select id="selectById" resultMap="ResMember" parameterType="String">
+		<include refid="selectSQL"></include>
+		<include refid="whereSQL"></include>
 	</select>
 	
 	<!-- 로그인시 로그인 수 증가 -->

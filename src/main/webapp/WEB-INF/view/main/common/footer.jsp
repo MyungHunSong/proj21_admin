@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="${contextPath}/resources/main/footer.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 #scrollMenu{
 	margin: 0;
@@ -25,7 +26,7 @@
 </style>
 <script type="text/javascript">
 	$(function () {
-			$("go_top").click(function(){
+			$("#go_top").click(function(){
 				$('html, body').animate({scrollTop:0}, 100);
 				
 				var scrollHeight = $(document).height();

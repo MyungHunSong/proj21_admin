@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/logout")
 public class LogOutController {
 	
-	@GetMapping
+	@RequestMapping("/logout")
 	public String logout(HttpSession session){
 		
 		session.invalidate();
 		System.out.println("이까지 탄다");
-		return "redirect:/main";		
+		String goMain = "main";
+		
+		return "redirect:" + "/" + goMain;		
 	}
 }

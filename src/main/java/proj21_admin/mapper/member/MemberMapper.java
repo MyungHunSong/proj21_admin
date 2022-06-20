@@ -11,6 +11,12 @@ public interface MemberMapper {
 	
 	MemberDTO selectByLoginId(MemberDTO member);
 	
+	/* 아이디 명시 */
+	MemberDTO selectById(String id);
+	
+	/*비번 명시*/
+	MemberDTO selectByPwd(MemberDTO member);
+	
 	// 로그인 횟수 업데이트
 	int updateTotalLogin(MemberDTO member);
 }

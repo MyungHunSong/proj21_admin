@@ -75,3 +75,5 @@ select r.re_num, p.pro_color,r.pro_num, r.re_member, r.re_content, r.re_image,re
 	
 	where r.pro_num like concat(#{proNum}, '%');
 
+select * 
+from cart;
